@@ -1,8 +1,7 @@
+var widgets = document.getElementById("widgets");
 
-var jokeWidget = function(){
 
-var widgets = document.getElementById("#widgets");
-
+var jokeWidget = function() {
 
     fetch("https://dad-jokes.p.rapidapi.com/random/joke", {
 	"method": "GET",
@@ -13,8 +12,24 @@ var widgets = document.getElementById("#widgets");
 })
 .then(response => {
 	response.json().then(function(data) {
-        console.log(data)
-    });
+
+        var joke = data.body[0].setup;
+        var punchLine = data.body[0].punchline
+        
+        var jokeCard = document.createElement("div");
+        jokeCard.classList = "card";
+
+        var jokeSetup = document.createElement("p");
+        jokeSetup.textContent = joke;
+
+        var jokeLine = document.createElement("p");
+        jokeLine.textContent = punchLine
+
+        widgets.appendChild(jokeCard);
+
+        jokeCard.appendChild(jokeSetup);
+        jokeCard.appendChild(jokeLine)
+    })
 })
 .catch(err => {
 	console.error(err);
@@ -36,7 +51,19 @@ fetch("https://sameer-kumar-aztro-v1.p.rapidapi.com/?sign=aquarius&day=today", {
 })
 .then(response => {
 	response.json().then(function(data) {
-        console.log(data.color)
+        var color = data.color 
+        
+        var horoscopeCard = document.createElement("div");
+        horoscopeCard.classList = "card"
+
+        var horoscopeColor = document.createElement("span");
+        horoscopeColor.textContent = color;
+
+        
+        
+        widgets.appendChild(horoscopeCard)
+        horoscopeCard.appendChild(horoscopeColor)
+
         console.log(data)
     })
 })
@@ -44,13 +71,9 @@ fetch("https://sameer-kumar-aztro-v1.p.rapidapi.com/?sign=aquarius&day=today", {
 	console.error(err);
 });
 
+        
 
-var horoscopeColor = document.createElement("div");
+};
 
-horoscopeColor.textContent = data.color
-
-widgets.appendchild(horoscopeColor)
-}
-
-horoscopeWidget();
 jokeWidget();
+horoscopeWidget();
