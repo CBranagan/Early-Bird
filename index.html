@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EarlyBird</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/css/foundation.min.css" integrity="sha256-ogmFxjqiTMnZhxCqVmcqTvjfe1Y/ec4WaRj/aQPvn+I=" crossorigin="anonymous">
+</head>
+<body>
+    <nav>
+        <div>
+            <p><button class="button" data-open="welcomeModal">Click me for a modal</button></p>
+        </div>
+        <div></div>
+        <div></div>
+    </nav>
+    <section id="widgets">
+        <div></div>
+        <div></div>
+        <div></div>
+    </section>
+    <section id="landing">
+        <div></div>
+    </section>
+
+    <!-- Welcome Modal start -->
+
+    <div class="reveal" id="welcomeModal" data-reveal>
+        <h1>Welcome to Early Bird!</h1>
+        <p class="lead">We would love to help you start your day off right!</p>
+        <p class="lead">To find out how to make your day perfect, allow us to ask a couple of questions.</p>
+        <div>
+            <form action="">
+                <h4>Name:</h4>
+                <input type="text" placeholder="ex. Alex Recipe">
+                <h4>Where do you live?</h4>
+                <input type="text" placeholder="ex. Recipeland">
+            </form>
+        </div>
+        <button class="close-button" data-close aria-label="Close modal" type="button">
+          <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    
+    <!-- Welcome Modal end -->
+    <!-- -->
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/js/foundation.min.js" integrity="sha256-pRF3zifJRA9jXGv++b06qwtSqX1byFQOLjqa2PTEb2o=" crossorigin="anonymous"></script>
+    <script>$(document).foundation();</script>
+</body>
+</html>
