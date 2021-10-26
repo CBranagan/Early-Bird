@@ -152,8 +152,6 @@ var horoscopeWidget = function() {
 
 
 
-
-
 // if else statement to check for local storage values and either run modals or display cards using previously stored data
 horoscopeWidget();
 jokeWidget();
@@ -163,6 +161,7 @@ jokeWidget();
 $(document).ready(function() {
     $('#welcomeModal').foundation('open');
 });
+
 
 nameButton.addEventListener("click", nameHandler)
 horoscopeButton.addEventListener("click", horoscopeHandler)
