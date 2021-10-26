@@ -18,6 +18,7 @@ var jokeWidget = function() {
         
         var jokeCard = document.createElement("div");
         jokeCard.classList = "card";
+        jokeCard.setAttribute("style", "width: 300px")
 
         var jokeSetup = document.createElement("p");
         jokeSetup.textContent = joke;
@@ -25,10 +26,14 @@ var jokeWidget = function() {
         var jokeLine = document.createElement("p");
         jokeLine.textContent = punchLine
 
-        widgets.appendChild(jokeCard);
+        var newJokeButton = document.createElement("button")
+        newJokeButton.textContent = "Get a New Joke";
 
+
+        widgets.appendChild(jokeCard);
         jokeCard.appendChild(jokeSetup);
         jokeCard.appendChild(jokeLine)
+        jokeCard.appendChild(newJokeButton)
     })
 })
 .catch(err => {
@@ -55,6 +60,7 @@ fetch("https://sameer-kumar-aztro-v1.p.rapidapi.com/?sign=aquarius&day=today", {
         
         var horoscopeCard = document.createElement("div");
         horoscopeCard.classList = "card"
+        horoscopeCard.setAttribute("style", "width: 300px")
 
         var horoscopeColor = document.createElement("span");
         horoscopeColor.textContent = color;
