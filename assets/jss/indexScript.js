@@ -12,6 +12,11 @@ var horoDesc = document.getElementById("horoDesc")
 var horoNumber = document.getElementById("horoNumber")
 var horoTime = document.getElementById("horoTime")
 var horoMood = document.getElementById("horoMood")
+var dadModal = document.getElementById("dadModal")
+
+
+
+// function to collect username and city and set it to local storage
 
 var nameHandler = function() {
 
@@ -24,6 +29,8 @@ var nameHandler = function() {
 
     
 }
+
+// function to collect horoscope data and set it to local storage
 
 var horoscopeHandler = function() {
     event.preventDefault();
@@ -47,7 +54,20 @@ var horoscopeHandler = function() {
     console.log(userHoroMood)
 }
 
+// function to say yes or no to dad jokes and set to local storage
 
+var dadJokeHandler = function() {
+
+    event.preventDefault();
+
+    var dadJokeOption = event.target.textContent
+
+    console.log(dadJokeOption)
+}
+
+
+
+// function to attach dad joke card
 
 var jokeWidget = function() {
     
@@ -91,7 +111,7 @@ var jokeWidget = function() {
 
 
 
-
+// function to add horoscope card
 
 var horoscopeWidget = function() {
     
@@ -129,6 +149,12 @@ var horoscopeWidget = function() {
     
 };
 
+
+
+
+
+
+// if else statement to check for local storage values and either run modals or display cards using previously stored data
 horoscopeWidget();
 jokeWidget();
 
@@ -140,3 +166,4 @@ $(document).ready(function() {
 
 nameButton.addEventListener("click", nameHandler)
 horoscopeButton.addEventListener("click", horoscopeHandler)
+dadModal.addEventListener("click", dadJokeHandler)
