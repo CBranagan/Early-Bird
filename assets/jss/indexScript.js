@@ -13,6 +13,7 @@ var horoNumber = document.getElementById("horoNumber")
 var horoTime = document.getElementById("horoTime")
 var horoMood = document.getElementById("horoMood")
 var dadModal = document.getElementById("dadModal")
+var butttonYes = document.getElementById("buttonyes")
 
 
 
@@ -26,6 +27,10 @@ var nameHandler = function() {
 
     console.log(userName)
     console.log(userCity)
+
+    localStorage.setItem("userName", userName)
+    localStorage.setItem("userCity", userCity)
+    
 
     
 }
@@ -44,14 +49,16 @@ var horoscopeHandler = function() {
     var userHoroTime = horoTime.checked
     var userHoroMood = horoMood.checked
 
-    console.log(userSign)
-    console.log(userHoroColor)
-    console.log(userHoroComp)
-    console.log(userHoroDate)
-    console.log(userHoroDesc)
-    console.log(userHoroNumber)
-    console.log(userHoroTime)
-    console.log(userHoroMood)
+    localStorage.setItem("userSign", userSign)
+    localStorage.setItem("userHoroColor", userHoroColor)
+    localStorage.setItem("userHoroComp", userHoroComp)
+    localStorage.setItem("userHoroDate", userHoroDate)
+    localStorage.setItem("userHoroDesc", userHoroDesc)
+    localStorage.setItem("userHoroNumber", userHoroNumber)
+    localStorage.setItem("userHoroTime", userHoroTime)
+    localStorage.setItem("userHoroMood", userHoroMood)
+    
+    
 }
 
 // function to say yes or no to dad jokes and set to local storage
@@ -60,7 +67,10 @@ var dadJokeHandler = function() {
 
     event.preventDefault();
 
+    console.dir(event)
     var dadJokeOption = event.target.textContent
+
+
 
     console.log(dadJokeOption)
 }
@@ -114,8 +124,10 @@ var jokeWidget = function() {
 // function to add horoscope card
 
 var horoscopeWidget = function() {
+
+    var userSign = localStorage.getItem("userSign")
     
-    fetch("https://sameer-kumar-aztro-v1.p.rapidapi.com/?sign=aquarius&day=today", {
+    fetch("https://sameer-kumar-aztro-v1.p.rapidapi.com/?sign=" + userSign + "&day=today", {
         "method": "POST",
         "headers": {
             "x-rapidapi-host": "sameer-kumar-aztro-v1.p.rapidapi.com",
