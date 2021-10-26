@@ -54,3 +54,8 @@ widgets.appendchild(horoscopeColor)
 
 horoscopeWidget();
 jokeWidget();
+
+$(document).ready(function() {
+    $('#welcomeModal').foundation('open');
+});
+
