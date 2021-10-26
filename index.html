@@ -32,16 +32,14 @@
         <p class="lead">To find out how to make your day perfect, allow us to ask a couple of questions.</p>
         <div>
             <form action="">
-                <h4>Name:</h4>
-                <input type="text" placeholder="ex. Alex Recipe">
-                <h4>Where do you live?</h4>
-                <input type="text" placeholder="ex. Recipeland">
+                <h4>What is your Name?</h4>
+                <input id="name" type="text" placeholder="ex. Alex Recipe">
+                <h4>What city do you live in?</h4>
+                <input id="city" type="text" placeholder="ex. Recipeland">
             </form>
-            <div><button class="button" data-open="horoscopeModal">Lets get started!</button></div>
+            <div><button id="namebutton" class="button" data-open="horoscopeModal">Lets get started!</button></div>
         </div>
-        <button class="close-button" data-close aria-label="Close modal" type="button">
-          <span aria-hidden="true">&times;</span>
-        </button>
+       
     </div>
     
     <!-- Welcome Modal end -->
@@ -86,9 +84,9 @@
             <br>
             <input type="checkbox" id="horoMood" name="horoMood" value="Mood">
             <label for="horoMood">Mood</label>
+            <div class="text-center"><button id="horoscopebutton" class="button" data-open="dadModal">Next</button></div>
         </form>
         <br>
-        <div class="text-center"><button class="button" data-open="dadModal">Next</button></div>
 
         <button class="close-button" data-close aria-label="Close modal" type="button">
             <span aria-hidden="true">&times;</span>
@@ -101,8 +99,8 @@
         <h1>Dad Jokes</h1>
         <p>Would you like to see a Dad Joke on your homepage?</p>
         <div class="grid-x row align-center">
-            <div class="cell small-4 text-center"><button class="button">Yes</button></div>
-            <div class="cell small-4 text-center"><button class="button">No</button></div>
+            <div class="cell small-4 text-center" data-close><button class="button">Yes</button></div>
+            <div class="cell small-4 text-center" data-close><button class="button">No</button></div>
         </div>
         <button class="close-button" data-close aria-label="Close modal" type="button">
             <span aria-hidden="true">&times;</span>
