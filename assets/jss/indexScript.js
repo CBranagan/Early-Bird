@@ -52,10 +52,10 @@ horoscopeColor.textContent = data.color
 widgets.appendchild(horoscopeColor)
 }
 
-horoscopeWidget();
-jokeWidget();
+// horoscopeWidget();
+// jokeWidget();
 
-$(document).ready(function() {
-    $('#welcomeModal').foundation('open');
-});
+// $(document).ready(function() {
+//     $('#welcomeModal').foundation('open');
+// });
 
