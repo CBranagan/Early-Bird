@@ -17,6 +17,7 @@ var butttonYes = document.getElementById("buttonyes")
 
 
 
+
 // function to collect username and city and set it to local storage
 
 var nameHandler = function() {
@@ -25,8 +26,6 @@ var nameHandler = function() {
 
     var userName = nameInput.value.trim()
 
-    console.log(userName)
-    console.log(userCity)
 
     localStorage.setItem("userName", userName)
     localStorage.setItem("userCity", userCity)
@@ -66,13 +65,11 @@ var horoscopeHandler = function() {
 var dadJokeHandler = function() {
 
     event.preventDefault();
+    
+    var dadJokeOption = event.target.dataset.value
 
-    console.dir(event)
-    var dadJokeOption = event.target.textContent
+    localStorage.setItem("dadJoke", dadJokeOption)
 
-
-
-    console.log(dadJokeOption)
 }
 
 
@@ -104,14 +101,14 @@ var jokeWidget = function() {
             var jokeLine = document.createElement("p");
             jokeLine.textContent = punchLine
             
-            var newJokeButton = document.createElement("button")
-            newJokeButton.textContent = "Get a New Joke";
+            // var newJokeButton = document.createElement("button")
+            // newJokeButton.textContent = "Get a New Joke";
             
             
             widgets.appendChild(jokeCard);
             jokeCard.appendChild(jokeSetup);
             jokeCard.appendChild(jokeLine)
-            jokeCard.appendChild(newJokeButton)
+            // jokeCard.appendChild(newJokeButton)
         })
     })
     .catch(err => {
@@ -136,14 +133,19 @@ var horoscopeWidget = function() {
     })
     .then(response => {
         response.json().then(function(data) {
-            var color = data.color 
             
             var horoscopeCard = document.createElement("div");
             horoscopeCard.classList = "card"
             horoscopeCard.setAttribute("style", "width: 300px")
             
+            var colorChoice = localStorage.getItem("userHoroColor") 
+
+            if (colorChoice === "true") {
+            
+            var color = data.color 
             var horoscopeColor = document.createElement("span");
-            horoscopeColor.textContent = color;
+            horoscopeColor.textContent = "Lucky Color: " + color;
+            }
             
             
             
