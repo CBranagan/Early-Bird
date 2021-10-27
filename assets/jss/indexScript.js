@@ -157,6 +157,7 @@ var horoscopeWidget = function(horoDataObj) {
         response.json().then(function(data) {
             
             var horoscopeCard = document.createElement("div");
+<<<<<<< HEAD
             horoscopeCard.classList = "card"
             horoscopeCard.setAttribute("style", "width: 300px")
 
@@ -179,6 +180,9 @@ var horoscopeWidget = function(horoDataObj) {
 
             
 
+=======
+
+>>>>>>> 0ed36590e203e4f4a22338c74850e9715cdb7eb0
             
             
             widgets.appendChild(horoscopeCard)
