@@ -52,6 +52,7 @@
           <img class="thumbnail" src="./assets/images/sun.png">
           <h5>My Site</h5>
         </div>
+
           
     </section>
     <section id="landing">
@@ -60,7 +61,7 @@
 
     <!-- Welcome Modal start -->
 
-    <div class="reveal" id="welcomeModal" data-reveal data-close-on-click="false" data-close-on-esc="false">
+    <div class="reveal" id="welcomeModal" data-reveal>
         <h1>Welcome to Early Bird!</h1>
         <p class="lead">We would love to help you start your day off right!</p>
         <p class="lead">To find out how to make your day perfect, allow us to ask a couple of questions.</p>
@@ -73,12 +74,13 @@
             </form>
             <div><button id="namebutton" class="button" data-open="horoscopeModal">Lets get started!</button></div>
         </div>
+       
     </div>
     
     <!-- Welcome Modal end -->
     <!-- Horoscope Modal-->
 
-    <div class="reveal" id="horoscopeModal" data-reveal data-close-on-click="false" data-close-on-esc="false">
+    <div class="reveal" id="horoscopeModal" data-reveal>
         <h1 class="text-center">Horoscope</h1>
         <p>If you would like to have Early Bird display your daily horoscope, please select your astrological sign below.</p>
         <form action="" id="horoForm">
@@ -130,21 +132,16 @@
 
     <!-- Dad-Joke Modal -->
 
-    <div class="reveal text-center" id="dadModal" data-reveal data-close-on-click="false" data-close-on-esc="false">
+    <div class="reveal text-center" id="dadModal" data-reveal>
         <h1>Dad Jokes</h1>
         <p>Would you like to see a Dad Joke on your homepage?</p>
-        <br>
         <div class="grid-x row align-center">
-            <form action="">
-                <div class="cell small-4 text-center">
-                    <button class="button" data-close>Yes</button>
-                    <button class="button" data-close>No</button>
-                </div>
-            </form>
-            <!-- Skip/Back Button -->
-            <button class="button secondary" data-close style="right: 1rem; bottom: 1rem; line-height: 1; position: absolute; z-index: 10;">Skip</button>
-            <button class="button secondary" data-open='horoscopeModal' style="left: 1rem; bottom: 1rem; line-height: 1; position: absolute; z-index: 10;">Back</button>
+            <div class="cell small-4 text-center" data-close><button data-value="true" id= "buttonyes" class="button">Yes</button></div>
+            <div class="cell small-4 text-center" data-close><button data-value="false" class="button">No</button></div>
         </div>
+        <button class="close-button" data-close aria-label="Close modal" type="button">
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
