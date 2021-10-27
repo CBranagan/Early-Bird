@@ -84,13 +84,15 @@
             <br>
             <input type="checkbox" id="horoMood" name="horoMood" value="Mood">
             <label for="horoMood">Mood</label>
-            <div class="text-center"><button id="horoscopebutton" class="button" data-open="dadModal">Next</button></div>
-            <button class="close-button" data-close aria-label="Close modal" type="button">
-                <span aria-hidden="true">&times;</span>
-            </button>
+            <br>
+            <div class="text-center">
+                <button id="horoscopebutton" class="button" data-open="dadModal">Next</button>
+            </div>
         </form>
-        <br>
-
+        <!-- Skip/Back Button -->
+        
+        <button class="button secondary" data-open="dadModal" style="right: 1rem; bottom: 1rem; line-height: 1; position: absolute; z-index: 10;">Skip</button>
+        <button class="button secondary" data-open='welcomeModal' style="left: 1rem; bottom: 1rem; line-height: 1; position: absolute; z-index: 10;">Back</button>
     </div>
 
     <!-- Dad-Joke Modal -->
