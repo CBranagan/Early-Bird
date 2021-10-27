@@ -106,8 +106,7 @@ var jokeWidget = function() {
             var punchLine = data.body[0].punchline
             
             var jokeCard = document.createElement("div");
-            jokeCard.classList = "card";
-            jokeCard.setAttribute("style", "width: 300px")
+            jokeCard.classList = "column";
             
             var jokeSetup = document.createElement("p");
             jokeSetup.textContent = joke;
@@ -155,8 +154,7 @@ var horoscopeWidget = function(horoDataObj) {
             var color = data.color 
             
             var horoscopeCard = document.createElement("div");
-            horoscopeCard.classList = "card"
-            horoscopeCard.setAttribute("style", "width: 300px")
+            horoscopeCard.classList = "column"
             
             var horoscopeColor = document.createElement("span");
             horoscopeColor.textContent = color;
@@ -185,8 +183,7 @@ var horoscopeWidget = function(horoDataObj) {
     //         var color = data.color 
             
     //         var horoscopeCard = document.createElement("div");
-    //         horoscopeCard.classList = "card"
-    //         horoscopeCard.setAttribute("style", "width: 300px")
+    //         horoscopeCard.classList = "column"
             
     //         var horoscopeColor = document.createElement("span");
     //         horoscopeColor.textContent = color;
