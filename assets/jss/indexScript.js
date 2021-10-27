@@ -15,6 +15,8 @@ var horoMood = document.getElementById("horoMood")
 var dadModal = document.getElementById("dadModal")
 var butttonYes = document.getElementById("buttonyes")
 
+var HoroscopeStuff = [];
+
 
 
 // function to collect username and city and set it to local storage
@@ -30,40 +32,49 @@ var nameHandler = function() {
 
     localStorage.setItem("userName", userName)
     localStorage.setItem("userCity", userCity)
-    
-
-    
 }
 
 // function to collect horoscope data and set it to local storage
 
-var horoscopeHandler = function() {
+var horoscopeHandler = function(event) {
     event.preventDefault();
-    
-    var userSign = horoscopeSign.value
-    var userHoroColor = horoColor.checked
-    var userHoroComp = horoComp.checked
-    var userHoroDate = horoDate.checked
-    var userHoroDesc = horoDesc.checked
-    var userHoroNumber = horoNumber.checked
-    var userHoroTime = horoTime.checked
-    var userHoroMood = horoMood.checked
 
-    localStorage.setItem("userSign", userSign)
-    localStorage.setItem("userHoroColor", userHoroColor)
-    localStorage.setItem("userHoroComp", userHoroComp)
-    localStorage.setItem("userHoroDate", userHoroDate)
-    localStorage.setItem("userHoroDesc", userHoroDesc)
-    localStorage.setItem("userHoroNumber", userHoroNumber)
-    localStorage.setItem("userHoroTime", userHoroTime)
-    localStorage.setItem("userHoroMood", userHoroMood)
+	var horoDataObj = {
+		sign: horoscopeSign.value,
+		color: horoColor.checked,
+		compatability: horoComp.checked,
+		description: horoDesc.checked,
+		number: horoNumber.checked,
+		time: horoTime.checked,
+		mood: horoMood.checked,
+	};
+    
+    // var userSign = horoscopeSign.value
+    // var userHoroColor = horoColor.checked
+    // var userHoroComp = horoComp.checked
+    // var userHoroDate = horoDate.checked
+    // var userHoroDesc = horoDesc.checked
+    // var userHoroNumber = horoNumber.checked
+    // var userHoroTime = horoTime.checked
+    // var userHoroMood = horoMood.checked
+
+    // localStorage.setItem("userSign", userSign)
+    // localStorage.setItem("userHoroColor", userHoroColor)
+    // localStorage.setItem("userHoroComp", userHoroComp)
+    // localStorage.setItem("userHoroDate", userHoroDate)
+    // localStorage.setItem("userHoroDesc", userHoroDesc)
+    // localStorage.setItem("userHoroNumber", userHoroNumber)
+    // localStorage.setItem("userHoroTime", userHoroTime)
+    // localStorage.setItem("userHoroMood", userHoroMood)
+
+	localStorage.setItem("HoroscopeStuff", JSON.stringify(horoDataObj));
     
     
 }
 
 // function to say yes or no to dad jokes and set to local storage
 
-var dadJokeHandler = function() {
+var dadJokeHandler = function(event) {
 
     event.preventDefault();
 
@@ -123,11 +134,15 @@ var jokeWidget = function() {
 
 // function to add horoscope card
 
-var horoscopeWidget = function() {
+var horoscopeWidget = function(horoDataObj) {
 
-    var userSign = localStorage.getItem("userSign")
-    
-    fetch("https://sameer-kumar-aztro-v1.p.rapidapi.com/?sign=" + userSign + "&day=today", {
+    var userSign = localStorage.getItem("HoroscopeStuff")
+	var userInfo = JSON.parse(userSign);
+
+	if (localStorage.HoroscopeStuff === undefined) {
+		console.log("NO HOROSCOPE INFORMATION!");
+	} else {
+		fetch("https://sameer-kumar-aztro-v1.p.rapidapi.com/?sign=" + userInfo.sign + "&day=today", {
         "method": "POST",
         "headers": {
             "x-rapidapi-host": "sameer-kumar-aztro-v1.p.rapidapi.com",
@@ -136,6 +151,7 @@ var horoscopeWidget = function() {
     })
     .then(response => {
         response.json().then(function(data) {
+
             var color = data.color 
             
             var horoscopeCard = document.createElement("div");
@@ -144,8 +160,6 @@ var horoscopeWidget = function() {
             
             var horoscopeColor = document.createElement("span");
             horoscopeColor.textContent = color;
-            
-            
             
             widgets.appendChild(horoscopeCard)
             horoscopeCard.appendChild(horoscopeColor)
@@ -156,6 +170,38 @@ var horoscopeWidget = function() {
     .catch(err => {
         console.error(err);
     });
+	}
+
+    // fetch("https://sameer-kumar-aztro-v1.p.rapidapi.com/?sign=" + userInfo.sign + "&day=today", {
+    //     "method": "POST",
+    //     "headers": {
+    //         "x-rapidapi-host": "sameer-kumar-aztro-v1.p.rapidapi.com",
+    //         "x-rapidapi-key": "5b4f00da92mshdc043b28ff0d6c7p1cab71jsn744cc19d64cb"
+    //     }
+    // })
+    // .then(response => {
+    //     response.json().then(function(data) {
+
+    //         var color = data.color 
+            
+    //         var horoscopeCard = document.createElement("div");
+    //         horoscopeCard.classList = "card"
+    //         horoscopeCard.setAttribute("style", "width: 300px")
+            
+    //         var horoscopeColor = document.createElement("span");
+    //         horoscopeColor.textContent = color;
+            
+            
+            
+    //         widgets.appendChild(horoscopeCard)
+    //         horoscopeCard.appendChild(horoscopeColor)
+            
+    //         console.log(data)
+    //     })
+    // })
+    // .catch(err => {
+    //     console.error(err);
+    // });
     
     
     
@@ -167,7 +213,6 @@ var horoscopeWidget = function() {
 // if else statement to check for local storage values and either run modals or display cards using previously stored data
 horoscopeWidget();
 jokeWidget();
-
 
 
 $(document).ready(function() {
