@@ -16,7 +16,7 @@ var dadModal = document.getElementById("dadModal")
 var butttonYes = document.getElementById("buttonyes")
 
 var HoroscopeStuff = [];
-
+var horoscopeApiCalls = ["color", "compatability", "description", "lucky_number", "lucky_time", "mood"]
 
 
 
@@ -38,15 +38,17 @@ var nameHandler = function() {
 var horoscopeHandler = function(event) {
     event.preventDefault();
 
-	var horoDataObj = {
-		sign: horoscopeSign.value,
-		color: horoColor.checked,
-		compatability: horoComp.checked,
-		description: horoDesc.checked,
-		number: horoNumber.checked,
-		time: horoTime.checked,
-		mood: horoMood.checked,
-	};
+	var horoDataObj = [
+		horoscopeSign.value,
+		horoColor.checked,
+		horoComp.checked,
+		horoDesc.checked,
+		horoNumber.checked,
+		horoTime.checked,
+		horoMood.checked,
+    ];
+
+    console.log(horoDataObj)
     
     // var userSign = horoscopeSign.value
     // var userHoroColor = horoColor.checked
@@ -133,13 +135,19 @@ var jokeWidget = function() {
 
 var horoscopeWidget = function(horoDataObj) {
 
-    var userSign = localStorage.getItem("HoroscopeStuff")
-	var userInfo = JSON.parse(userSign);
+    // var userSign = localStorage.getItem("HoroscopeStuff")
+	// var userInfo = JSON.parse(userSign);
+
+    var userInfo = localStorage.getItem("HoroscopeStuff")
+    var userInfo2 = JSON.parse(userInfo)
+   
+    console.log(userInfo2)
+
 
 	if (localStorage.HoroscopeStuff === undefined) {
 		console.log("NO HOROSCOPE INFORMATION!");
 	} else {
-		fetch("https://sameer-kumar-aztro-v1.p.rapidapi.com/?sign=" + userInfo.sign + "&day=today", {
+		fetch("https://sameer-kumar-aztro-v1.p.rapidapi.com/?sign=" + userInfo2[0] + "&day=today", {
         "method": "POST",
         "headers": {
             "x-rapidapi-host": "sameer-kumar-aztro-v1.p.rapidapi.com",
@@ -148,79 +156,59 @@ var horoscopeWidget = function(horoDataObj) {
     })
     .then(response => {
         response.json().then(function(data) {
-
-            var color = data.color 
             
             var horoscopeCard = document.createElement("div");
             horoscopeCard.classList = "card"
             horoscopeCard.setAttribute("style", "width: 300px")
-            
-            var colorChoice = localStorage.getItem("userHoroColor") 
 
-            if (colorChoice === "true") {
+            for (var i=1; i < userInfo2.length; i++) {
+
+                if (userInfo2[i]) {
+
+                    var horoElInfo = horoscopeApiCalls[i-1]
+
+                    var horoEloutput = data.horoElInfo
+
+                    console.log(horoElInfo)
+                    
+                    var horoEl = document.createElement("span");
+                    horoEl.textContent = horoscopeApiCalls[i-1] + color;
+
+            }}
+
+
+
             
-            var color = data.color 
-            var horoscopeColor = document.createElement("span");
-            horoscopeColor.textContent = "Lucky Color: " + color;
-            }
+
+            
             
             widgets.appendChild(horoscopeCard)
             horoscopeCard.appendChild(horoscopeColor)
-            
-            console.log(data)
+            horoscopeCard.appendChild(horoscopeCompatability)
+            horoscopeCard.appendChild(horoscopeDescription)
+           
         })
     })
     .catch(err => {
         console.error(err);
     });
 	}
-
-    // fetch("https://sameer-kumar-aztro-v1.p.rapidapi.com/?sign=" + userInfo.sign + "&day=today", {
-    //     "method": "POST",
-    //     "headers": {
-    //         "x-rapidapi-host": "sameer-kumar-aztro-v1.p.rapidapi.com",
-    //         "x-rapidapi-key": "5b4f00da92mshdc043b28ff0d6c7p1cab71jsn744cc19d64cb"
-    //     }
-    // })
-    // .then(response => {
-    //     response.json().then(function(data) {
-
-    //         var color = data.color 
-            
-    //         var horoscopeCard = document.createElement("div");
-    //         horoscopeCard.classList = "card"
-    //         horoscopeCard.setAttribute("style", "width: 300px")
-            
-    //         var horoscopeColor = document.createElement("span");
-    //         horoscopeColor.textContent = color;
-            
-            
-            
-    //         widgets.appendChild(horoscopeCard)
-    //         horoscopeCard.appendChild(horoscopeColor)
-            
-    //         console.log(data)
-    //     })
-    // })
-    // .catch(err => {
-    //     console.error(err);
-    // });
-    
-    
-    
 };
 
 
 
 
-// if else statement to check for local storage values and either run modals or display cards using previously stored data
-horoscopeWidget();
-jokeWidget();
 
 
-$(document).ready(function() {
-    $('#welcomeModal').foundation('open');
-});
+if (localStorage.userName === undefined) {
+    $(document).ready(function() {
+        $('#welcomeModal').foundation('open');
+    });
+} else {
+    horoscopeWidget();
+    jokeWidget();
+    console.log('You have info. Enjoy.')
+}
 
 
 nameButton.addEventListener("click", nameHandler)
