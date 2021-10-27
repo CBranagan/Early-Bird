@@ -165,28 +165,6 @@ var horoscopeWidget = function(horoDataObj) {
         response.json().then(function(data) {
             
             var horoscopeCard = document.createElement("div");
-            horoscopeCard.classList = "card"
-            horoscopeCard.setAttribute("style", "width: 300px")
-
-            for (var i=1; i < userInfo2.length; i++) {
-
-                if (userInfo2[i]) {
-
-                    var horoElInfo = horoscopeApiCalls[i-1]
-
-                    var horoEloutput = data.horoElInfo
-
-                    console.log(horoElInfo)
-                    
-                    var horoEl = document.createElement("span");
-                    horoEl.textContent = horoscopeApiCalls[i-1] + color;
-
-            }}
-
-
-
-            
-
             
             
             widgets.appendChild(horoscopeCard)
