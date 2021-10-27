@@ -16,6 +16,7 @@ var dadModal = document.getElementById("dadModal")
 var butttonYes = document.getElementById("buttonyes")
 
 var HoroscopeStuff = [];
+var horoscopeApiCalls = ["color", "compatability", "description", "lucky_number", "lucky_time", "mood"]
 
 
 
@@ -27,8 +28,6 @@ var nameHandler = function() {
 
     var userName = nameInput.value.trim()
 
-    console.log(userName)
-    console.log(userCity)
 
     localStorage.setItem("userName", userName)
     localStorage.setItem("userCity", userCity)
@@ -39,15 +38,17 @@ var nameHandler = function() {
 var horoscopeHandler = function(event) {
     event.preventDefault();
 
-	var horoDataObj = {
-		sign: horoscopeSign.value,
-		color: horoColor.checked,
-		compatability: horoComp.checked,
-		description: horoDesc.checked,
-		number: horoNumber.checked,
-		time: horoTime.checked,
-		mood: horoMood.checked,
-	};
+	var horoDataObj = [
+		horoscopeSign.value,
+		horoColor.checked,
+		horoComp.checked,
+		horoDesc.checked,
+		horoNumber.checked,
+		horoTime.checked,
+		horoMood.checked,
+    ];
+
+    console.log(horoDataObj)
     
     // var userSign = horoscopeSign.value
     // var userHoroColor = horoColor.checked
@@ -77,13 +78,11 @@ var horoscopeHandler = function(event) {
 var dadJokeHandler = function(event) {
 
     event.preventDefault();
+    
+    var dadJokeOption = event.target.dataset.value
 
-    console.dir(event)
-    var dadJokeOption = event.target.textContent
+    localStorage.setItem("dadJoke", dadJokeOption)
 
-
-
-    console.log(dadJokeOption)
 }
 
 
@@ -114,14 +113,14 @@ var jokeWidget = function() {
             var jokeLine = document.createElement("p");
             jokeLine.textContent = punchLine
             
-            var newJokeButton = document.createElement("button")
-            newJokeButton.textContent = "Get a New Joke";
+            // var newJokeButton = document.createElement("button")
+            // newJokeButton.textContent = "Get a New Joke";
             
             
             widgets.appendChild(jokeCard);
             jokeCard.appendChild(jokeSetup);
             jokeCard.appendChild(jokeLine)
-            jokeCard.appendChild(newJokeButton)
+            // jokeCard.appendChild(newJokeButton)
         })
     })
     .catch(err => {
@@ -135,13 +134,19 @@ var jokeWidget = function() {
 
 var horoscopeWidget = function(horoDataObj) {
 
-    var userSign = localStorage.getItem("HoroscopeStuff")
-	var userInfo = JSON.parse(userSign);
+    // var userSign = localStorage.getItem("HoroscopeStuff")
+	// var userInfo = JSON.parse(userSign);
+
+    var userInfo = localStorage.getItem("HoroscopeStuff")
+    var userInfo2 = JSON.parse(userInfo)
+   
+    console.log(userInfo2)
+
 
 	if (localStorage.HoroscopeStuff === undefined) {
 		console.log("NO HOROSCOPE INFORMATION!");
 	} else {
-		fetch("https://sameer-kumar-aztro-v1.p.rapidapi.com/?sign=" + userInfo.sign + "&day=today", {
+		fetch("https://sameer-kumar-aztro-v1.p.rapidapi.com/?sign=" + userInfo2[0] + "&day=today", {
         "method": "POST",
         "headers": {
             "x-rapidapi-host": "sameer-kumar-aztro-v1.p.rapidapi.com",
@@ -150,71 +155,38 @@ var horoscopeWidget = function(horoDataObj) {
     })
     .then(response => {
         response.json().then(function(data) {
-
-            var color = data.color 
             
             var horoscopeCard = document.createElement("div");
-            horoscopeCard.classList = "column"
+
             
-            var horoscopeColor = document.createElement("span");
-            horoscopeColor.textContent = color;
             
             widgets.appendChild(horoscopeCard)
             horoscopeCard.appendChild(horoscopeColor)
-            
-            console.log(data)
+            horoscopeCard.appendChild(horoscopeCompatability)
+            horoscopeCard.appendChild(horoscopeDescription)
+           
         })
     })
     .catch(err => {
         console.error(err);
     });
 	}
-
-    // fetch("https://sameer-kumar-aztro-v1.p.rapidapi.com/?sign=" + userInfo.sign + "&day=today", {
-    //     "method": "POST",
-    //     "headers": {
-    //         "x-rapidapi-host": "sameer-kumar-aztro-v1.p.rapidapi.com",
-    //         "x-rapidapi-key": "5b4f00da92mshdc043b28ff0d6c7p1cab71jsn744cc19d64cb"
-    //     }
-    // })
-    // .then(response => {
-    //     response.json().then(function(data) {
-
-    //         var color = data.color 
-            
-    //         var horoscopeCard = document.createElement("div");
-    //         horoscopeCard.classList = "column"
-            
-    //         var horoscopeColor = document.createElement("span");
-    //         horoscopeColor.textContent = color;
-            
-            
-            
-    //         widgets.appendChild(horoscopeCard)
-    //         horoscopeCard.appendChild(horoscopeColor)
-            
-    //         console.log(data)
-    //     })
-    // })
-    // .catch(err => {
-    //     console.error(err);
-    // });
-    
-    
-    
 };
 
 
 
 
-// if else statement to check for local storage values and either run modals or display cards using previously stored data
-horoscopeWidget();
-jokeWidget();
 
 
-$(document).ready(function() {
-    $('#welcomeModal').foundation('open');
-});
+if (localStorage.userName === undefined) {
+    $(document).ready(function() {
+        $('#welcomeModal').foundation('open');
+    });
+} else {
+    horoscopeWidget();
+    jokeWidget();
+    console.log('You have info. Enjoy.')
+}
 
 
 nameButton.addEventListener("click", nameHandler)
