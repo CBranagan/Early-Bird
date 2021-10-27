@@ -16,7 +16,7 @@ var dadModal = document.getElementById("dadModal")
 var butttonYes = document.getElementById("buttonyes")
 
 var HoroscopeStuff = [];
-
+var userName = [];
 
 
 // function to collect username and city and set it to local storage
@@ -68,6 +68,8 @@ var horoscopeHandler = function(event) {
     // localStorage.setItem("userHoroMood", userHoroMood)
 
 	localStorage.setItem("HoroscopeStuff", JSON.stringify(horoDataObj));
+
+	horoscopeWidget();
     
     
 }
@@ -100,30 +102,39 @@ var jokeWidget = function() {
         }
     })
     .then(response => {
-        response.json().then(function(data) {
+		if (response.ok) {
+			response.json().then(function(data) {
             
-            var joke = data.body[0].setup;
-            var punchLine = data.body[0].punchline
-            
-            var jokeCard = document.createElement("div");
-            jokeCard.classList = "card";
-            jokeCard.setAttribute("style", "width: 300px")
-            
-            var jokeSetup = document.createElement("p");
-            jokeSetup.textContent = joke;
-            
-            var jokeLine = document.createElement("p");
-            jokeLine.textContent = punchLine
-            
-            var newJokeButton = document.createElement("button")
-            newJokeButton.textContent = "Get a New Joke";
-            
-            
-            widgets.appendChild(jokeCard);
-            jokeCard.appendChild(jokeSetup);
-            jokeCard.appendChild(jokeLine)
-            jokeCard.appendChild(newJokeButton)
-        })
+				var joke = data.body[0].setup;
+				var punchLine = data.body[0].punchline
+				
+				var jokeCard = document.createElement("div");
+				jokeCard.classList = "card";
+				jokeCard.setAttribute("style", "width: 300px")
+				
+				var jokeSetup = document.createElement("p");
+				jokeSetup.textContent = joke;
+				
+				var jokeLine = document.createElement("p");
+				jokeLine.textContent = punchLine
+				
+				var newJokeButton = document.createElement("button")
+				newJokeButton.textContent = "Get a New Joke";
+				
+				
+				widgets.appendChild(jokeCard);
+				jokeCard.appendChild(jokeSetup);
+				jokeCard.appendChild(jokeLine)
+				jokeCard.appendChild(newJokeButton)
+
+				jokeWidget();
+			})
+		} else {
+			var dadLimit = document.createElement("p");
+			dadLimit.textContent = "You have hit your daily limit of 50 Dad Jokes, go outside.";
+			widgets.appendChild(dadLimit);
+		}
+
     })
     .catch(err => {
         console.error(err);
@@ -136,13 +147,16 @@ var jokeWidget = function() {
 
 var horoscopeWidget = function(horoDataObj) {
 
-    var userSign = localStorage.getItem("HoroscopeStuff")
-	var userInfo = JSON.parse(userSign);
+    // var userSign = localStorage.getItem("HoroscopeStuff")
+	// var userInfo = JSON.parse(userSign);
 
+    var userInfo = localStorage.getItem("HoroscopeStuff")
+    var userInfo2 = JSON.parse(userInfo)
+   
 	if (localStorage.HoroscopeStuff === undefined) {
 		console.log("NO HOROSCOPE INFORMATION!");
 	} else {
-		fetch("https://sameer-kumar-aztro-v1.p.rapidapi.com/?sign=" + userInfo.sign + "&day=today", {
+		fetch("https://sameer-kumar-aztro-v1.p.rapidapi.com/?sign=" + userInfo2.sign + "&day=today", {
         "method": "POST",
         "headers": {
             "x-rapidapi-host": "sameer-kumar-aztro-v1.p.rapidapi.com",
@@ -151,20 +165,21 @@ var horoscopeWidget = function(horoDataObj) {
     })
     .then(response => {
         response.json().then(function(data) {
-
-            var color = data.color 
             
             var horoscopeCard = document.createElement("div");
             horoscopeCard.classList = "card"
             horoscopeCard.setAttribute("style", "width: 300px")
+          
+            if (userInfo2.color) {
             
+            var color = data.color 
             var horoscopeColor = document.createElement("span");
-            horoscopeColor.textContent = color;
+            horoscopeColor.textContent = "Lucky Color: " + color;
+            }
             
             widgets.appendChild(horoscopeCard)
             horoscopeCard.appendChild(horoscopeColor)
             
-            console.log(data)
         })
     })
     .catch(err => {
@@ -207,17 +222,20 @@ var horoscopeWidget = function(horoDataObj) {
     
 };
 
-
-
-
 // if else statement to check for local storage values and either run modals or display cards using previously stored data
-horoscopeWidget();
-jokeWidget();
+// horoscopeWidget();
+// jokeWidget();
 
 
-$(document).ready(function() {
-    $('#welcomeModal').foundation('open');
-});
+if (localStorage.userName === undefined) {
+	$(document).ready(function() {
+		$('#welcomeModal').foundation('open');
+	});
+} else {
+	horoscopeWidget();
+	jokeWidget();
+}
+
 
 
 nameButton.addEventListener("click", nameHandler)
