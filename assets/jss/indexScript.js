@@ -166,13 +166,19 @@ var horoscopeWidget = function(horoDataObj) {
                 if (userInfo2[i]) {
 
                     var horoElInfo = horoscopeApiCalls[i-1]
+                    console.log(data)
 
-                    var horoEloutput = data.horoElInfo
+                   var horoEl = function(horoElInfo) {
 
-                    console.log(horoElInfo)
+
+                       var horoEl = document.createElement("span");
+                       horoEl.textContent = horoElInfo;
+                       
+                       widgets.appendChild(horoscopeCard)
+                       horoscopeCard.appendChild(horoEl)
+
+                   }
                     
-                    var horoEl = document.createElement("span");
-                    horoEl.textContent = horoscopeApiCalls[i-1] + color;
 
             }}
 
@@ -181,11 +187,8 @@ var horoscopeWidget = function(horoDataObj) {
             
 
             
-            
-            widgets.appendChild(horoscopeCard)
-            horoscopeCard.appendChild(horoscopeColor)
-            horoscopeCard.appendChild(horoscopeCompatability)
-            horoscopeCard.appendChild(horoscopeDescription)
+            // horoscopeCard.appendChild(horoscopeCompatability)
+            // horoscopeCard.appendChild(horoscopeDescription)
            
         })
     })
