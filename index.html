@@ -58,32 +58,102 @@
 
     <!-- Welcome Modal start -->
 
-    <div class="reveal" id="welcomeModal" data-reveal>
+    <div class="reveal" id="welcomeModal" data-reveal data-close-on-click="false" data-close-on-esc="false">
         <h1>Welcome to Early Bird!</h1>
         <p class="lead">We would love to help you start your day off right!</p>
         <p class="lead">To find out how to make your day perfect, allow us to ask a couple of questions.</p>
         <div>
             <form action="">
-                <h4>Name:</h4>
-                <input type="text" placeholder="ex. Alex Recipe">
-                <h4>Where do you live?</h4>
-                <input type="text" placeholder="ex. Recipeland">
+                <h4>What is your Name?</h4>
+                <input id="name" type="text" placeholder="ex. Alex Recipe">
+                <h4>What city do you live in?</h4>
+                <input id="city" type="text" placeholder="ex. Recipeland">
             </form>
+            <div><button id="namebutton" class="button" data-open="horoscopeModal">Lets get started!</button></div>
         </div>
-        <button class="close-button" data-close aria-label="Close modal" type="button">
-          <span aria-hidden="true">&times;</span>
-        </button>
     </div>
     
     <!-- Welcome Modal end -->
-    <!-- -->
+    <!-- Horoscope Modal-->
 
+    <div class="reveal" id="horoscopeModal" data-reveal data-close-on-click="false" data-close-on-esc="false">
+        <h1 class="text-center">Horoscope</h1>
+        <p>If you would like to have Early Bird display your daily horoscope, please select your astrological sign below.</p>
+        <form action="" id="horoForm">
+            <select name="signs" id="horosign">
+                <option value="aries">Aries</option>
+                <option value="taurus">Taurus</option>
+                <option value="gemini">Gemini</option>
+                <option value="cancer">Cancer</option>
+                <option value="leo">Leo</option>
+                <option value="virgo">Virgo</option>
+                <option value="libra">Libra</option>
+                <option value="scorpius">Scorpius</option>
+                <option value="sagittarius">Sagittarius</option>
+                <option value="capricornus">Capricornus</option>
+                <option value="aquarius">Aquarius</option>
+                <option value="pisces">Pisces</option>
+            </select>
+            <p>What type of horoscope content would you like to see?</p>
+            <input type="checkbox" id="horoColor" name="horoColor" value="Color">
+            <label for="horoColo">Color</label>
+            <br>
+            <input type="checkbox" id="horoComp" name="horoComp" value="Compatability">
+            <label for="horoComp">Compatability</label>
+            <br>
+            <input type="checkbox" id="horoDate" name="horoDate" value="Date Range">
+            <label for="horoDate">Date Range</label>
+            <br>
+            <input type="checkbox" id="horoDesc" name="horoDesc" value="Description">
+            <label for="horoDesc">Description</label>
+            <br>
+            <input type="checkbox" id="horoNumber" name="horoNumber" value="Lucky Number">
+            <label for="horoNumber">Lucky Number</label>
+            <br>
+            <input type="checkbox" id="horoTime" name="horoTime" value="Lucky Time">
+            <label for="horoTime">Lucky Time</label>
+            <br>
+            <input type="checkbox" id="horoMood" name="horoMood" value="Mood">
+            <label for="horoMood">Mood</label>
+            <br>
+            <div class="text-center">
+                <button id="horoscopebutton" class="button" data-open="dadModal">Next</button>
+            </div>
+        </form>
+        <!-- Skip/Back Button -->
+        
+        <button class="button secondary" data-open="dadModal" style="right: 1rem; bottom: 1rem; line-height: 1; position: absolute; z-index: 10;">Skip</button>
+        <button class="button secondary" data-open='welcomeModal' style="left: 1rem; bottom: 1rem; line-height: 1; position: absolute; z-index: 10;">Back</button>
+    </div>
+
+    <!-- Dad-Joke Modal -->
+
+    <div class="reveal text-center" id="dadModal" data-reveal data-close-on-click="false" data-close-on-esc="false">
+        <h1>Dad Jokes</h1>
+        <p>Would you like to see a Dad Joke on your homepage?</p>
+        <br>
+        <div class="grid-x row align-center">
+            <form action="">
+                <div class="cell small-4 text-center">
+                    <button class="button" data-close>Yes</button>
+                    <button class="button" data-close>No</button>
+                </div>
+            </form>
+            <!-- Skip/Back Button -->
+            <button class="button secondary" data-close style="right: 1rem; bottom: 1rem; line-height: 1; position: absolute; z-index: 10;">Skip</button>
+            <button class="button secondary" data-open='horoscopeModal' style="left: 1rem; bottom: 1rem; line-height: 1; position: absolute; z-index: 10;">Back</button>
+        </div>
+    </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/js/foundation.min.js" integrity="sha256-pRF3zifJRA9jXGv++b06qwtSqX1byFQOLjqa2PTEb2o=" crossorigin="anonymous"></script>
     <script>$(document).foundation();</script>
     <script src="./assets/jss/indexScript.js"></script>
+<<<<<<< HEAD
     </div>
     <hr>
+=======
+  
+>>>>>>> 09b4ceed965daa5628577449a3c59f3de908c6f2
 </body>
 </html>
