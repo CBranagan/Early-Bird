@@ -88,6 +88,9 @@ var jokeWidget = function() {
             var jokeCard = document.createElement("div");
             jokeCard.classList = "card";
             jokeCard.setAttribute("style", "width: 300px")
+
+            var jokeImg = document.createElement("img")
+            jokeImg.setAttribute("src", "assets/images/Dad-jokes.jpg")
             
             var jokeSetup = document.createElement("p");
             jokeSetup.textContent = joke;
@@ -100,6 +103,7 @@ var jokeWidget = function() {
             
             
             widgets.appendChild(jokeCard);
+            jokeCard.appendChild(jokeImg)
             jokeCard.appendChild(jokeSetup);
             jokeCard.appendChild(jokeLine)
             // jokeCard.appendChild(newJokeButton)
@@ -124,13 +128,14 @@ var horoscopeWidget = function(horoDataObj) {
     console.log(userInfo)
     var userInfo2 = JSON.parse(userInfo)
    
-    console.log(userInfo2.Sign)
+    var userSign = userInfo2.Sign
 
+console.log(userSign)
 
 	if (localStorage.HoroscopeStuff === undefined) {
 		console.log("NO HOROSCOPE INFORMATION!");
 	} else {
-		fetch("https://sameer-kumar-aztro-v1.p.rapidapi.com/?sign=" + userInfo2.Sign + "&day=today", {
+		fetch("https://sameer-kumar-aztro-v1.p.rapidapi.com/?sign=" + userSign + "&day=today", {
         "method": "POST",
         "headers": {
             "x-rapidapi-host": "sameer-kumar-aztro-v1.p.rapidapi.com",
@@ -143,9 +148,14 @@ var horoscopeWidget = function(horoDataObj) {
             console.log(data)
                 
                 var horoscopeCard = document.createElement("div");
+                
+                
                 horoscopeCard.classList = "card"
                 horoscopeCard.setAttribute("style", "width: 300px")
                 
+                var horoSign = document.createElement("img")
+                horoSign.setAttribute("src", "assets/images/" + userSign + ".jpg")
+                horoscopeCard.appendChild(horoSign)
                 
                 
                 if (userInfo2.color) {
