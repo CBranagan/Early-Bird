@@ -175,24 +175,81 @@ var horoscopeWidget = function(horoDataObj) {
                 var horoscopeCard = document.createElement("div");
                 horoscopeCard.classList = "card"
                 horoscopeCard.setAttribute("style", "width: 300px")
-
-               
-
-                    if (userInfo2.color) {
-
-                        var horoColor = data.color
-                        console.log(horoColor)
-
-                           var horoEl = document.createElement("span");
-                           horoEl.textContent = horoColor;
-                        
-                           
+                
+                
+                
+                if (userInfo2.color) {
+                    
+                    var horoColor = data.color
+                    console.log(horoColor)
+                    
+                    var horoColorEl = document.createElement("span");
+                    horoColorEl.textContent = horoColor;
+                    
+                    horoscopeCard.appendChild(horoColorEl)
+                }
+                
+                        if (userInfo2.compatability) {
+                            
+                            
+                            var horoCompatability = data.compatability
+                            
+                            
+                            var horoCompatabilityEl = document.createElement("span");
+                            horoCompatabilityEl.textContent = horoCompatability;
+                            
+                            horoscopeCard.appendChild(horoCompatabilityEl)                        
                         }
                         
                         
                         
+                        if (userInfo2.description) {
+                            
+                            var horodescription = data.description
+                            
+                            
+                            var horodescriptionEl = document.createElement("span");
+                            horodescriptionEl.textContent = horodescription;
+                            
+                            horoscopeCard.appendChild(horodescriptionEl)
+                        }
+
+                        
+                        if (userInfo2.lucky_number) {
+                            
+                            var horolucky_number = data.lucky_number
+                            
+                            
+    
+                               var horolucky_numberEl = document.createElement("span");
+                               horolucky_numberEl.textContent = horolucky_number;
+                               
+                               horoscopeCard.appendChild(horolucky_numberEl)
+                        }
+
+                        if (userInfo2.lucky_time) {
+
+                            var horolucky_time = data.lucky_time
+                           
+        
+                            var horolucky_timeEl = document.createElement("span");
+                            horolucky_timeEl.textContent = horolucky_time;
+                                   
+                            horoscopeCard.appendChild(horolucky_timeEl)
+                        }
+
+                        if (userInfo2.mood) {
+
+                            var horomood = data.mood
+                           
+        
+                            var horomoodEl = document.createElement("span");
+                            horomoodEl.textContent = horomood;
+                                   
+                            horoscopeCard.appendChild(horomoodEl)
+                        }
+                        
                         widgets.appendChild(horoscopeCard)
-                        horoscopeCard.appendChild(horoEl)
 
             
         })
