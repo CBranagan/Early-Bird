@@ -84,6 +84,8 @@ var dadJokeHandler = function(event) {
 
     localStorage.setItem("dadJoke", dadJokeOption)
 
+    jokeWidget();
+
 }
 
 
@@ -125,7 +127,6 @@ var jokeWidget = function() {
 				jokeCard.appendChild(jokeLine)
 				jokeCard.appendChild(newJokeButton)
 
-				jokeWidget();
 			})
 		} else {
 			var dadLimit = document.createElement("p");
@@ -179,11 +180,6 @@ var horoscopeWidget = function(horoDataObj) {
     });
 	}
 };
-
-
-
-
-
 
 if (localStorage.userName === undefined) {
     $(document).ready(function() {
