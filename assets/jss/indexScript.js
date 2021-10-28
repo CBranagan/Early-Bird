@@ -28,9 +28,11 @@ var nameHandler = function() {
 
     var userName = nameInput.value.trim()
 
-
     localStorage.setItem("userName", userName)
     localStorage.setItem("userCity", userCity)
+
+    console.log
+    weatherGet(userCity);
 }
 
 // function to collect horoscope data and set it to local storage
@@ -86,50 +88,54 @@ var jokeWidget = function() {
     .then(response => {
         response.json().then(function(data) {
             
-            var joke = data.body[0].setup;
-            var punchLine = data.body[0].punchline
-            
-            var jokeCard = document.createElement("div");
-            jokeCard.classList = "card";
-            jokeCard.setAttribute("style", "width: 300px")
-            
-            var jokeSetup = document.createElement("p");
-            jokeSetup.textContent = joke;
-            
-            var jokeLine = document.createElement("p");
-            jokeLine.textContent = punchLine
-            
-				var joke = data.body[0].setup;
-				var punchLine = data.body[0].punchline
-				
-				var jokeCard = document.createElement("div");
-				jokeCard.classList = "card";
-				jokeCard.setAttribute("style", "width: 300px")
-				
-				var jokeSetup = document.createElement("p");
-				jokeSetup.textContent = joke;
-				
-				var jokeLine = document.createElement("p");
-				jokeLine.textContent = punchLine
-				
-				var newJokeButton = document.createElement("button")
-				newJokeButton.textContent = "Get a New Joke";
-				
-				
-				widgets.appendChild(jokeCard);
-				jokeCard.appendChild(jokeSetup);
-				jokeCard.appendChild(jokeLine)
-				jokeCard.appendChild(newJokeButton)
+            if (response.ok) {
+                var joke = data.body[0].setup;
+                var punchLine = data.body[0].punchline
+                
+                var jokeCard = document.createElement("div");
+                jokeCard.classList = "card";
+                jokeCard.setAttribute("style", "width: 300px")
+                
+                var jokeSetup = document.createElement("p");
+                jokeSetup.textContent = joke;
+                
+                var jokeLine = document.createElement("p");
+                jokeLine.textContent = punchLine
+                
+                    var joke = data.body[0].setup;
+                    var punchLine = data.body[0].punchline
+                    
+                    var jokeCard = document.createElement("div");
+                    jokeCard.classList = "card";
+                    jokeCard.setAttribute("style", "width: 300px")
+                    
+                    var jokeSetup = document.createElement("p");
+                    jokeSetup.textContent = joke;
+                    
+                    var jokeLine = document.createElement("p");
+                    jokeLine.textContent = punchLine
+                    
+                    var newJokeButton = document.createElement("button")
+                    newJokeButton.textContent = "Get a New Joke";
+                    
+                    
+                    widgets.appendChild(jokeCard);
+                    jokeCard.appendChild(jokeSetup);
+                    jokeCard.appendChild(jokeLine)
+                    jokeCard.appendChild(newJokeButton)
+            } else {
+                var limitCard = document.createElement("div");
+                limitCard.classList = "card";
 
-			})
-		} else {
-			var dadLimit = document.createElement("p");
-			dadLimit.textContent = "You have hit your daily limit of 50 Dad Jokes, go outside.";
-			widgets.appendChild(dadLimit);
-		}
+                var limitNotice = document.createElement("p");
+                limitNotice.textContent = "You have hit your limit of 50 jokes a day. Please come back tomorrow for more!";
 
-    })
-    .catch(err => {
+                widgets.appendChild(limitCard);
+                limitCard.appendChild(limitNotice);
+
+            }
+		})
+    }).catch(err => {
         console.error(err);
     });
 }
@@ -195,6 +201,39 @@ var horoscopeWidget = function(horoDataObj) {
         });
     }
 }
+
+// weather card
+var weatherGet = function(userCity) {
+    var weatherUrl = 'https://api.openweathermap.org/data/2.5/weather?q=' + userCity + '&units=imperial&appid=c76096fafe8cde85ece92131d9372eb5';
+    fetch(weatherUrl)
+    .then(function(response) {
+        if (response.ok) {
+            response.json().then(function(data) {
+                var weatherDataObj = {
+                    name: userCity,
+                    temp: data.main.temp,
+                    desc: data.weather[0].description,
+                    humidity: data.main.humidity,
+                    wind:data.wind.speed,
+                };
+                console.log(weatherDataObj);
+            }) 
+        }
+    })
+};
+
+var weatherWidget = function(weatherDataObj) {
+    
+}
+
+
+
+
+
+
+
+
+
 
 
 if (localStorage.userName === undefined) {
