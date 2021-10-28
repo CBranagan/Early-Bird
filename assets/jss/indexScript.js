@@ -85,8 +85,7 @@ var jokeWidget = function() {
             var punchLine = data.body[0].punchline
             
             var jokeCard = document.createElement("div");
-            jokeCard.classList = "card";
-            jokeCard.setAttribute("style", "width: 300px")
+            jokeCard.classList = "column";
             
             var jokeSetup = document.createElement("p");
             jokeSetup.textContent = joke;
@@ -131,10 +130,30 @@ var horoscopeWidget = function(horoDataObj) {
         "headers": {
             "x-rapidapi-host": "sameer-kumar-aztro-v1.p.rapidapi.com",
             "x-rapidapi-key": "5b4f00da92mshdc043b28ff0d6c7p1cab71jsn744cc19d64cb"
+<<<<<<< HEAD
              }
         })
         .then(response => response.json())
         .then(function(data) {
+=======
+        }
+    })
+    .then(response => {
+        response.json().then(function(data) {
+            
+            var horoscopeCard = document.createElement("div");
+<<<<<<< HEAD
+            horoscopeCard.classList = "card"
+            horoscopeCard.setAttribute("style", "width: 300px")
+
+            for (var i=1; i < userInfo2.length; i++) {
+
+                if (userInfo2[i]) {
+
+                    var horoElInfo = horoscopeApiCalls[i-1]
+
+                    var horoEloutput = data.horoElInfo
+>>>>>>> 32069b66a71af49bd6323b9ed0fd42e859796385
 
             console.log(data)
                 
@@ -160,6 +179,9 @@ var horoscopeWidget = function(horoDataObj) {
                         widgets.appendChild(horoscopeCard)
                         horoscopeCard.appendChild(horoEl)
 
+=======
+
+>>>>>>> 0ed36590e203e4f4a22338c74850e9715cdb7eb0
             
         })
         .catch(err => {
