@@ -16,7 +16,7 @@ var dadModal = document.getElementById("dadModal")
 var butttonYes = document.getElementById("buttonyes")
 
 var HoroscopeStuff = [];
-var horoscopeApiCalls = ["color", "compatability", "description", "lucky_number", "lucky_time", "mood"]
+
 
 
 
@@ -38,35 +38,16 @@ var nameHandler = function() {
 var horoscopeHandler = function(event) {
     event.preventDefault();
 
-	var horoDataObj = [
-		horoscopeSign.value,
-		horoColor.checked,
-		horoComp.checked,
-		horoDesc.checked,
-		horoNumber.checked,
-		horoTime.checked,
-		horoMood.checked,
-    ];
+	var horoDataObj = {
+		Sign: horoscopeSign.value,
+		color: horoColor.checked,
+		compatability: horoComp.checked,
+		description: horoDesc.checked,
+		lucky_number: horoNumber.checked,
+		lucky_time: horoTime.checked,
+		mood: horoMood.checked,
+    };
 
-    console.log(horoDataObj)
-    
-    // var userSign = horoscopeSign.value
-    // var userHoroColor = horoColor.checked
-    // var userHoroComp = horoComp.checked
-    // var userHoroDate = horoDate.checked
-    // var userHoroDesc = horoDesc.checked
-    // var userHoroNumber = horoNumber.checked
-    // var userHoroTime = horoTime.checked
-    // var userHoroMood = horoMood.checked
-
-    // localStorage.setItem("userSign", userSign)
-    // localStorage.setItem("userHoroColor", userHoroColor)
-    // localStorage.setItem("userHoroComp", userHoroComp)
-    // localStorage.setItem("userHoroDate", userHoroDate)
-    // localStorage.setItem("userHoroDesc", userHoroDesc)
-    // localStorage.setItem("userHoroNumber", userHoroNumber)
-    // localStorage.setItem("userHoroTime", userHoroTime)
-    // localStorage.setItem("userHoroMood", userHoroMood)
 
 	localStorage.setItem("HoroscopeStuff", JSON.stringify(horoDataObj));
     
@@ -105,7 +86,8 @@ var jokeWidget = function() {
             var punchLine = data.body[0].punchline
             
             var jokeCard = document.createElement("div");
-            jokeCard.classList = "column";
+            jokeCard.classList = "card";
+            jokeCard.setAttribute("style", "width: 300px")
             
             var jokeSetup = document.createElement("p");
             jokeSetup.textContent = joke;
@@ -138,65 +120,58 @@ var horoscopeWidget = function(horoDataObj) {
 	// var userInfo = JSON.parse(userSign);
 
     var userInfo = localStorage.getItem("HoroscopeStuff")
+
+    console.log(userInfo)
     var userInfo2 = JSON.parse(userInfo)
    
-    console.log(userInfo2)
+    console.log(userInfo2.Sign)
 
 
 	if (localStorage.HoroscopeStuff === undefined) {
 		console.log("NO HOROSCOPE INFORMATION!");
 	} else {
-		fetch("https://sameer-kumar-aztro-v1.p.rapidapi.com/?sign=" + userInfo2[0] + "&day=today", {
+		fetch("https://sameer-kumar-aztro-v1.p.rapidapi.com/?sign=" + userInfo2.Sign + "&day=today", {
         "method": "POST",
         "headers": {
             "x-rapidapi-host": "sameer-kumar-aztro-v1.p.rapidapi.com",
             "x-rapidapi-key": "5b4f00da92mshdc043b28ff0d6c7p1cab71jsn744cc19d64cb"
-        }
-    })
-    .then(response => {
-        response.json().then(function(data) {
-            
-            var horoscopeCard = document.createElement("div");
-<<<<<<< HEAD
-            horoscopeCard.classList = "card"
-            horoscopeCard.setAttribute("style", "width: 300px")
-
-            for (var i=1; i < userInfo2.length; i++) {
-
-                if (userInfo2[i]) {
-
-                    var horoElInfo = horoscopeApiCalls[i-1]
-
-                    var horoEloutput = data.horoElInfo
-
-                    console.log(horoElInfo)
-                    
-                    var horoEl = document.createElement("span");
-                    horoEl.textContent = horoscopeApiCalls[i-1] + color;
-
-            }}
-
-
-
-            
-
-=======
-
->>>>>>> 0ed36590e203e4f4a22338c74850e9715cdb7eb0
-            
-            
-            widgets.appendChild(horoscopeCard)
-            horoscopeCard.appendChild(horoscopeColor)
-            horoscopeCard.appendChild(horoscopeCompatability)
-            horoscopeCard.appendChild(horoscopeDescription)
-           
+             }
         })
-    })
-    .catch(err => {
-        console.error(err);
-    });
-	}
-};
+        .then(response => response.json())
+        .then(function(data) {
+
+            console.log(data)
+                
+                var horoscopeCard = document.createElement("div");
+                horoscopeCard.classList = "card"
+                horoscopeCard.setAttribute("style", "width: 300px")
+
+               
+
+                    if (userInfo2.color) {
+
+                        var horoColor = data.color
+                        console.log(horoColor)
+
+                           var horoEl = document.createElement("span");
+                           horoEl.textContent = horoColor;
+                        
+                           
+                        }
+                        
+                        
+                        
+                        widgets.appendChild(horoscopeCard)
+                        horoscopeCard.appendChild(horoEl)
+
+            
+        })
+        .catch(err => {
+            console.error(err);
+        });
+    }
+}
+
 
 
 
