@@ -166,12 +166,12 @@ var horoscopeWidget = function(horoDataObj) {
         response.json().then(function(data) {
             
             var horoscopeCard = document.createElement("div");
-            
+            var horoscopeColor = document.createElement("div");
             
             widgets.appendChild(horoscopeCard)
             horoscopeCard.appendChild(horoscopeColor)
-            horoscopeCard.appendChild(horoscopeCompatability)
-            horoscopeCard.appendChild(horoscopeDescription)
+            // horoscopeCard.appendChild(horoscopeCompatability)
+            // horoscopeCard.appendChild(horoscopeDescription)
            
         })
     })
