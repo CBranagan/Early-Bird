@@ -269,7 +269,6 @@ var bannerCreation = function() {
 
     var welcomeBox = document.createElement("div")
     welcomeBox.classList = "columns small-8 grid-x align-middle"
-    welcomeBox.style.fontFamily = "Verdana, Geneva, Tahoma, sans-serif"
 
     var welcomeHeader = document.createElement("h2")
     
