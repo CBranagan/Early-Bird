@@ -32,6 +32,8 @@ var nameHandler = function() {
 
     localStorage.setItem("userName", userName)
     localStorage.setItem("userCity", userCity)
+
+    bannerCreation();
 }
 
 // function to collect horoscope data and set it to local storage
@@ -51,6 +53,8 @@ var horoscopeHandler = function(event) {
 
 
 	localStorage.setItem("HoroscopeStuff", JSON.stringify(horoDataObj));
+
+    horoscopeWidget();
     
     
 }
