@@ -69,61 +69,63 @@ var dadJokeHandler = function(event) {
 
     localStorage.setItem("dadJoke", dadJokeOption)
 
+    jokeWidget();
+
 }
 
 
 
-// // function to attach dad joke card
+// function to attach dad joke card
 
-// var jokeWidget = function() {
+var jokeWidget = function() {
     
-//     fetch("https://dad-jokes.p.rapidapi.com/random/joke", {
-//         "method": "GET",
-//         "headers": {
-//             "x-rapidapi-host": "dad-jokes.p.rapidapi.com",
-//             "x-rapidapi-key": "5b4f00da92mshdc043b28ff0d6c7p1cab71jsn744cc19d64cb"
-//         }
-//     })
-//     .then(response => {
-//         response.json().then(function(data) {
+    fetch("https://dad-jokes.p.rapidapi.com/random/joke", {
+        "method": "GET",
+        "headers": {
+            "x-rapidapi-host": "dad-jokes.p.rapidapi.com",
+            "x-rapidapi-key": "5b4f00da92mshdc043b28ff0d6c7p1cab71jsn744cc19d64cb"
+        }
+    })
+    .then(response => {
+        response.json().then(function(data) {
             
-//             var joke = data.body[0].setup;
-//             var punchLine = data.body[0].punchline
+            var joke = data.body[0].setup;
+            var punchLine = data.body[0].punchline
 
-//             var jokeCardContainer = document.createElement("div")
-//             jokeCardContainer.classList = "column"
+            var jokeCardContainer = document.createElement("div")
+            jokeCardContainer.classList = "column"
             
-//             var jokeCard = document.createElement("div");
-//             jokeCard.classList = "card";
-//             jokeCard.setAttribute("style", "width: 300px")
+            var jokeCard = document.createElement("div");
+            jokeCard.classList = "card";
+            jokeCard.setAttribute("style", "width: 300px")
 
-//             var jokeImg = document.createElement("img")
-//             jokeImg.setAttribute("src", "assets/images/Dad-jokes.jpg")
+            var jokeImg = document.createElement("img")
+            jokeImg.setAttribute("src", "assets/images/Dad-jokes.jpg")
             
-//             var jokeSetup = document.createElement("h5");
-//             jokeSetup.classList = "card-divider"
-//             jokeSetup.textContent = joke;
+            var jokeSetup = document.createElement("h5");
+            jokeSetup.classList = "card-divider"
+            jokeSetup.textContent = joke;
             
-//             var jokeLine = document.createElement("p");
-//             jokeLine.classList = "card-section"
-//             jokeLine.textContent = punchLine
+            var jokeLine = document.createElement("p");
+            jokeLine.classList = "card-section"
+            jokeLine.textContent = punchLine
             
-//             // var newJokeButton = document.createElement("button")
-//             // newJokeButton.textContent = "Get a New Joke";
+            // var newJokeButton = document.createElement("button")
+            // newJokeButton.textContent = "Get a New Joke";
             
             
-//             jokeCard.appendChild(jokeImg)
-//             jokeCard.appendChild(jokeSetup);
-//             jokeCard.appendChild(jokeLine)
-//             jokeCardContainer.appendChild(jokeCard)
-//             widgets.appendChild(jokeCardContainer);
-//             // jokeCard.appendChild(newJokeButton)
-//         })
-//     })
-//     .catch(err => {
-//         console.error(err);
-//     });
-// }
+            jokeCard.appendChild(jokeImg)
+            jokeCard.appendChild(jokeSetup);
+            jokeCard.appendChild(jokeLine)
+            jokeCardContainer.appendChild(jokeCard)
+            widgets.appendChild(jokeCardContainer);
+            // jokeCard.appendChild(newJokeButton)
+        })
+    })
+    .catch(err => {
+        console.error(err);
+    });
+}
 
 
 
