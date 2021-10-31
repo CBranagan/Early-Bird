@@ -14,6 +14,7 @@ var horoTime = document.getElementById("horoTime")
 var horoMood = document.getElementById("horoMood")
 var dadModal = document.getElementById("dadModal")
 var butttonYes = document.getElementById("buttonyes")
+var welcomeBanner = document.getElementById("welcomeBanner")
 
 var HoroscopeStuff = [];
 
@@ -95,10 +96,12 @@ var dadJokeHandler = function(event) {
 //             var jokeImg = document.createElement("img")
 //             jokeImg.setAttribute("src", "assets/images/Dad-jokes.jpg")
             
-//             var jokeSetup = document.createElement("p");
+//             var jokeSetup = document.createElement("h5");
+//             jokeSetup.classList = "card-divider"
 //             jokeSetup.textContent = joke;
             
 //             var jokeLine = document.createElement("p");
+//             jokeLine.classList = "card-section"
 //             jokeLine.textContent = punchLine
             
 //             // var newJokeButton = document.createElement("button")
@@ -169,12 +172,11 @@ console.log(userSign)
                     
                     var horodescriptionEl = document.createElement("h5");
                     horodescriptionEl.classList = "card-divider"
-                    horodescriptionEl.textContent = "Horoscope: " + horodescription;
+                    horodescriptionEl.textContent = horodescription;
                     
                     horoscopeCard.appendChild(horodescriptionEl)
 
                 }
-
 
                 // card section for the rest of the horoscope options
 
@@ -187,6 +189,7 @@ console.log(userSign)
                     
                     var horoColorEl = document.createElement("p");
                     horoColorEl.textContent = "Lucky Color: " + horoColor;
+                    horoColorEl.setAttribute("style", "background-color: " + horoColor )
                     
                     
                     horoDataSection.appendChild(horoColorEl)
@@ -206,10 +209,6 @@ console.log(userSign)
                             horoDataSection.appendChild(horoCompatibilityEl)                        
                         }
                         
-                        
-                        
-                        
-
                         
                         if (userInfo2.lucky_number) {
                             
@@ -257,6 +256,25 @@ console.log(userSign)
     }
 }
 
+var bannerCreation = function() {
+
+    var name = localStorage.getItem("userName")
+    console.log(name)
+
+    var welcomeBox = document.createElement("div")
+    welcomeBox.classList = "columns small-8 grid-x align-middle"
+
+    var welcomeHeader = document.createElement("h2")
+    
+    welcomeHeader.textContent = "Welcome to Early Bird, " + name + " !"
+
+    welcomeBox.appendChild(welcomeHeader)
+
+    welcomeBanner.appendChild(welcomeBox)
+
+
+}
+
 
 
 
@@ -269,6 +287,7 @@ if (localStorage.userName === undefined) {
     });
 } else {
     horoscopeWidget();
+    bannerCreation();
     jokeWidget();
     console.log('You have info. Enjoy.')
 }
