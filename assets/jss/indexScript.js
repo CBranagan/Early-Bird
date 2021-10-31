@@ -14,7 +14,7 @@ var horoTime = document.getElementById("horoTime")
 var horoMood = document.getElementById("horoMood")
 var dadModal = document.getElementById("dadModal")
 var butttonYes = document.getElementById("buttonyes")
-var columnMainEl = document.getElementById("column-main")
+var welcomeBanner = document.getElementById("welcomeBanner")
 
 var HoroscopeStuff = [];
 
@@ -31,8 +31,7 @@ var nameHandler = function() {
     localStorage.setItem("userName", userName)
     localStorage.setItem("userCity", userCity)
 
-    console.log
-    weatherGet(userCity);
+    bannerCreation();
 }
 
 // function to collect horoscope data and set it to local storage
@@ -53,7 +52,7 @@ var horoscopeHandler = function(event) {
 
 	localStorage.setItem("HoroscopeStuff", JSON.stringify(horoDataObj));
 
-	horoscopeWidget();
+    horoscopeWidget();
     
     
 }
@@ -88,54 +87,40 @@ var jokeWidget = function() {
     .then(response => {
         response.json().then(function(data) {
             
-            if (response.ok) {
-                var joke = data.body[0].setup;
-                var punchLine = data.body[0].punchline
-                
-                var jokeCard = document.createElement("div");
-                jokeCard.classList = "card";
-                jokeCard.setAttribute("style", "width: 300px")
-                
-                var jokeSetup = document.createElement("p");
-                jokeSetup.textContent = joke;
-                
-                var jokeLine = document.createElement("p");
-                jokeLine.textContent = punchLine
-                
-                    var joke = data.body[0].setup;
-                    var punchLine = data.body[0].punchline
-                    
-                    var jokeCard = document.createElement("div");
-                    jokeCard.classList = "card";
-                    jokeCard.setAttribute("style", "width: 300px")
-                    
-                    var jokeSetup = document.createElement("p");
-                    jokeSetup.textContent = joke;
-                    
-                    var jokeLine = document.createElement("p");
-                    jokeLine.textContent = punchLine
-                    
-                    var newJokeButton = document.createElement("button")
-                    newJokeButton.textContent = "Get a New Joke";
-                    
-                    
-                    widgets.appendChild(jokeCard);
-                    jokeCard.appendChild(jokeSetup);
-                    jokeCard.appendChild(jokeLine)
-                    jokeCard.appendChild(newJokeButton)
-            } else {
-                var limitCard = document.createElement("div");
-                limitCard.classList = "card";
+            var joke = data.body[0].setup;
+            var punchLine = data.body[0].punchline
 
-                var limitNotice = document.createElement("p");
-                limitNotice.textContent = "You have hit your limit of 50 jokes a day. Please come back tomorrow for more!";
+            var jokeCardContainer = document.createElement("div")
+            jokeCardContainer.classList = "column"
+            
+            var jokeCard = document.createElement("div");
+            jokeCard.classList = "card";
+            jokeCard.setAttribute("style", "width: 300px")
 
-                widgets.appendChild(limitCard);
-                limitCard.appendChild(limitNotice);
-
-            }
-		})
-    }).catch(err => {
+            var jokeImg = document.createElement("img")
+            jokeImg.setAttribute("src", "assets/images/Dad-jokes.jpg")
+            
+            var jokeSetup = document.createElement("h5");
+            jokeSetup.classList = "card-divider"
+            jokeSetup.textContent = joke;
+            
+            var jokeLine = document.createElement("p");
+            jokeLine.classList = "card-section"
+            jokeLine.textContent = punchLine
+            
+            // var newJokeButton = document.createElement("button")
+            // newJokeButton.textContent = "Get a New Joke";
+            
+            
+            jokeCard.appendChild(jokeImg)
+            jokeCard.appendChild(jokeSetup);
+            jokeCard.appendChild(jokeLine)
+            jokeCardContainer.appendChild(jokeCard)
+            widgets.appendChild(jokeCardContainer);
+            // jokeCard.appendChild(newJokeButton)
+        })
+    })
+    .catch(err => {
         console.error(err);
     });
 }
@@ -146,21 +131,20 @@ var jokeWidget = function() {
 
 var horoscopeWidget = function(horoDataObj) {
 
-    // var userSign = localStorage.getItem("HoroscopeStuff")
-	// var userInfo = JSON.parse(userSign);
 
     var userInfo = localStorage.getItem("HoroscopeStuff")
 
     console.log(userInfo)
     var userInfo2 = JSON.parse(userInfo)
    
-    console.log(userInfo2.Sign)
+    var userSign = userInfo2.Sign
 
+console.log(userSign)
 
 	if (localStorage.HoroscopeStuff === undefined) {
 		console.log("NO HOROSCOPE INFORMATION!");
 	} else {
-		fetch("https://sameer-kumar-aztro-v1.p.rapidapi.com/?sign=" + userInfo2.Sign + "&day=today", {
+		fetch("https://sameer-kumar-aztro-v1.p.rapidapi.com/?sign=" + userSign + "&day=today", {
         "method": "POST",
         "headers": {
             "x-rapidapi-host": "sameer-kumar-aztro-v1.p.rapidapi.com",
@@ -172,48 +156,63 @@ var horoscopeWidget = function(horoDataObj) {
 
             console.log(data)
                 
+                var horoCardContainer = document.createElement("div")
+                horoCardContainer.classList = "column"
+
                 var horoscopeCard = document.createElement("div");
+                
+                
                 horoscopeCard.classList = "card"
                 horoscopeCard.setAttribute("style", "width: 300px")
                 
+                var horoSign = document.createElement("img")
+                horoSign.setAttribute("src", "assets/images/" + userSign + ".jpg")
+                horoscopeCard.appendChild(horoSign)
                 
+                if (userInfo2.description) {
+                    
+                    var horodescription = data.description
+                    
+                    
+                    var horodescriptionEl = document.createElement("h5");
+                    horodescriptionEl.classList = "card-divider"
+                    horodescriptionEl.textContent = horodescription;
+                    
+                    horoscopeCard.appendChild(horodescriptionEl)
+
+                }
+
+                // card section for the rest of the horoscope options
+
+                    var horoDataSection = document.createElement("div")
+                    horoDataSection.classList = "card-section"
                 
                 if (userInfo2.color) {
                     
                     var horoColor = data.color
-                    console.log(horoColor)
                     
-                    var horoColorEl = document.createElement("span");
-                    horoColorEl.textContent = horoColor;
+                    var horoColorEl = document.createElement("p");
+                    horoColorEl.textContent = "Lucky Color: " + horoColor;
+                    horoColorEl.setAttribute("style", "background-color: " + horoColor )
                     
-                    horoscopeCard.appendChild(horoColorEl)
+                    
+                    horoDataSection.appendChild(horoColorEl)
                 }
                 
                         if (userInfo2.compatability) {
                             
                             
-                            var horoCompatability = data.compatability
+                            var horoCompatibility = data.compatibility
                             
                             
-                            var horoCompatabilityEl = document.createElement("span");
-                            horoCompatabilityEl.textContent = horoCompatability;
                             
-                            horoscopeCard.appendChild(horoCompatabilityEl)                        
+                            var horoCompatibilityEl = document.createElement("p");
+                            horoCompatibilityEl.textContent = "Compatible with: " + horoCompatibility;
+                            
+                            
+                            horoDataSection.appendChild(horoCompatibilityEl)                        
                         }
                         
-                        
-                        
-                        if (userInfo2.description) {
-                            
-                            var horodescription = data.description
-                            
-                            
-                            var horodescriptionEl = document.createElement("span");
-                            horodescriptionEl.textContent = horodescription;
-                            
-                            horoscopeCard.appendChild(horodescriptionEl)
-                        }
-
                         
                         if (userInfo2.lucky_number) {
                             
@@ -221,10 +220,10 @@ var horoscopeWidget = function(horoDataObj) {
                             
                             
     
-                               var horolucky_numberEl = document.createElement("span");
-                               horolucky_numberEl.textContent = horolucky_number;
+                               var horolucky_numberEl = document.createElement("p");
+                               horolucky_numberEl.textContent = "Lucky Number: " + horolucky_number;
                                
-                               horoscopeCard.appendChild(horolucky_numberEl)
+                               horoDataSection.appendChild(horolucky_numberEl)
                         }
 
                         if (userInfo2.lucky_time) {
@@ -232,10 +231,10 @@ var horoscopeWidget = function(horoDataObj) {
                             var horolucky_time = data.lucky_time
                            
         
-                            var horolucky_timeEl = document.createElement("span");
-                            horolucky_timeEl.textContent = horolucky_time;
+                            var horolucky_timeEl = document.createElement("p");
+                            horolucky_timeEl.textContent = "Lucky Time: " + horolucky_time;
                                    
-                            horoscopeCard.appendChild(horolucky_timeEl)
+                            horoDataSection.appendChild(horolucky_timeEl)
                         }
 
                         if (userInfo2.mood) {
@@ -243,13 +242,15 @@ var horoscopeWidget = function(horoDataObj) {
                             var horomood = data.mood
                            
         
-                            var horomoodEl = document.createElement("span");
-                            horomoodEl.textContent = horomood;
+                            var horomoodEl = document.createElement("p");
+                            horomoodEl.textContent = "Today's Mood: " + horomood;
                                    
-                            horoscopeCard.appendChild(horomoodEl)
+                            horoDataSection.appendChild(horomoodEl)
                         }
                         
-                        widgets.appendChild(horoscopeCard)
+                        horoscopeCard.appendChild(horoDataSection)
+                        horoCardContainer.appendChild(horoscopeCard)
+                        widgets.appendChild(horoCardContainer)
 
             
         })
@@ -310,6 +311,25 @@ var weatherWidget = function(weatherDataObj) {
     var weatherCardDesc = document.createElement('li');
     weatherCardDesc.textContent = weatherDataObj.desc;
     weatherCardContent.appendChild(weatherCardDesc);
+var bannerCreation = function() {
+
+    var name = localStorage.getItem("userName")
+    console.log(name)
+
+    var welcomeBox = document.createElement("div")
+    welcomeBox.classList = "columns small-8 grid-x align-middle"
+
+    var welcomeHeader = document.createElement("h2")
+    
+    welcomeHeader.textContent = "Welcome to Early Bird, " + name + " !"
+
+    welcomeBox.appendChild(welcomeHeader)
+
+    welcomeBanner.appendChild(welcomeBox)
+
+
+}
+
 
     var weatherCardHumid = document.createElement('li');
     weatherCardHumid.textContent = 'Humidity: ' + weatherDataObj.humidity + "%";
@@ -333,9 +353,11 @@ if (localStorage.userName === undefined) {
     });
 } else {
     horoscopeWidget();
+    bannerCreation();
     jokeWidget();
     weatherWidget();
 }
+
 
 
 nameButton.addEventListener("click", nameHandler)
