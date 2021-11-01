@@ -14,6 +14,7 @@ var horoTime = document.getElementById("horoTime")
 var horoMood = document.getElementById("horoMood")
 var dadModal = document.getElementById("dadModal")
 var butttonYes = document.getElementById("buttonyes")
+var welcomeBanner = document.getElementById("welcomeBanner")
 
 var HoroscopeStuff = [];
 
@@ -27,11 +28,12 @@ var nameHandler = function() {
 
     var userName = nameInput.value.trim()
 
-    console.log(userName)
-    console.log(userCity)
-
     localStorage.setItem("userName", userName)
     localStorage.setItem("userCity", userCity)
+
+    bannerCreation();
+    weatherGet(userCity);
+
 }
 
 // function to collect horoscope data and set it to local storage
@@ -40,34 +42,19 @@ var horoscopeHandler = function(event) {
     event.preventDefault();
 
 	var horoDataObj = {
-		sign: horoscopeSign.value,
+		Sign: horoscopeSign.value,
 		color: horoColor.checked,
 		compatability: horoComp.checked,
 		description: horoDesc.checked,
-		number: horoNumber.checked,
-		time: horoTime.checked,
+		lucky_number: horoNumber.checked,
+		lucky_time: horoTime.checked,
 		mood: horoMood.checked,
-	};
-    
-    // var userSign = horoscopeSign.value
-    // var userHoroColor = horoColor.checked
-    // var userHoroComp = horoComp.checked
-    // var userHoroDate = horoDate.checked
-    // var userHoroDesc = horoDesc.checked
-    // var userHoroNumber = horoNumber.checked
-    // var userHoroTime = horoTime.checked
-    // var userHoroMood = horoMood.checked
+    };
 
-    // localStorage.setItem("userSign", userSign)
-    // localStorage.setItem("userHoroColor", userHoroColor)
-    // localStorage.setItem("userHoroComp", userHoroComp)
-    // localStorage.setItem("userHoroDate", userHoroDate)
-    // localStorage.setItem("userHoroDesc", userHoroDesc)
-    // localStorage.setItem("userHoroNumber", userHoroNumber)
-    // localStorage.setItem("userHoroTime", userHoroTime)
-    // localStorage.setItem("userHoroMood", userHoroMood)
 
 	localStorage.setItem("HoroscopeStuff", JSON.stringify(horoDataObj));
+
+    horoscopeWidget();
     
     
 }
@@ -77,13 +64,13 @@ var horoscopeHandler = function(event) {
 var dadJokeHandler = function(event) {
 
     event.preventDefault();
+    
+    var dadJokeOption = event.target.dataset.value
 
-    console.dir(event)
-    var dadJokeOption = event.target.textContent
+    localStorage.setItem("dadJoke", dadJokeOption)
 
+    jokeWidget();
 
-
-    console.log(dadJokeOption)
 }
 
 
@@ -104,25 +91,35 @@ var jokeWidget = function() {
             
             var joke = data.body[0].setup;
             var punchLine = data.body[0].punchline
+
+            var jokeCardContainer = document.createElement("div")
+            jokeCardContainer.classList = "column"
             
             var jokeCard = document.createElement("div");
             jokeCard.classList = "card";
             jokeCard.setAttribute("style", "width: 300px")
+
+            var jokeImg = document.createElement("img")
+            jokeImg.setAttribute("src", "assets/images/Dad-jokes.jpg")
             
-            var jokeSetup = document.createElement("p");
+            var jokeSetup = document.createElement("h5");
+            jokeSetup.classList = "card-divider"
             jokeSetup.textContent = joke;
             
             var jokeLine = document.createElement("p");
+            jokeLine.classList = "card-section"
             jokeLine.textContent = punchLine
             
-            var newJokeButton = document.createElement("button")
-            newJokeButton.textContent = "Get a New Joke";
+            // var newJokeButton = document.createElement("button")
+            // newJokeButton.textContent = "Get a New Joke";
             
             
-            widgets.appendChild(jokeCard);
+            jokeCard.appendChild(jokeImg)
             jokeCard.appendChild(jokeSetup);
             jokeCard.appendChild(jokeLine)
-            jokeCard.appendChild(newJokeButton)
+            jokeCardContainer.appendChild(jokeCard)
+            widgets.appendChild(jokeCardContainer);
+            // jokeCard.appendChild(newJokeButton)
         })
     })
     .catch(err => {
@@ -136,88 +133,237 @@ var jokeWidget = function() {
 
 var horoscopeWidget = function(horoDataObj) {
 
-    var userSign = localStorage.getItem("HoroscopeStuff")
-	var userInfo = JSON.parse(userSign);
+
+    var userInfo = localStorage.getItem("HoroscopeStuff")
+
+    console.log(userInfo)
+    var userInfo2 = JSON.parse(userInfo)
+   
+    var userSign = userInfo2.Sign
+
+console.log(userSign)
 
 	if (localStorage.HoroscopeStuff === undefined) {
 		console.log("NO HOROSCOPE INFORMATION!");
 	} else {
-		fetch("https://sameer-kumar-aztro-v1.p.rapidapi.com/?sign=" + userInfo.sign + "&day=today", {
+		fetch("https://sameer-kumar-aztro-v1.p.rapidapi.com/?sign=" + userSign + "&day=today", {
         "method": "POST",
         "headers": {
             "x-rapidapi-host": "sameer-kumar-aztro-v1.p.rapidapi.com",
             "x-rapidapi-key": "5b4f00da92mshdc043b28ff0d6c7p1cab71jsn744cc19d64cb"
+             }
+        })
+        .then(response => response.json())
+        .then(function(data) {
+
+            console.log(data)
+                
+                var horoCardContainer = document.createElement("div")
+                horoCardContainer.classList = "column"
+
+                var horoscopeCard = document.createElement("div");
+                
+                
+                horoscopeCard.classList = "card"
+                horoscopeCard.setAttribute("style", "width: 300px")
+                
+                var horoSign = document.createElement("img")
+                horoSign.setAttribute("src", "assets/images/" + userSign + ".jpg")
+                horoscopeCard.appendChild(horoSign)
+                
+                if (userInfo2.description) {
+                    
+                    var horodescription = data.description
+                    
+                    
+                    var horodescriptionEl = document.createElement("h5");
+                    horodescriptionEl.classList = "card-divider"
+                    horodescriptionEl.textContent = horodescription;
+                    
+                    horoscopeCard.appendChild(horodescriptionEl)
+
+                }
+
+                // card section for the rest of the horoscope options
+
+                    var horoDataSection = document.createElement("div")
+                    horoDataSection.classList = "card-section"
+                
+                if (userInfo2.color) {
+                    
+                    var horoColor = data.color
+                    
+                    var horoColorEl = document.createElement("p");
+                    horoColorEl.textContent = "Lucky Color: " + horoColor;
+                    horoColorEl.setAttribute("style", "background-color: " + horoColor )
+                    
+                    
+                    horoDataSection.appendChild(horoColorEl)
+                }
+                
+                        if (userInfo2.compatability) {
+                            
+                            
+                            var horoCompatibility = data.compatibility
+                            
+                            
+                            
+                            var horoCompatibilityEl = document.createElement("p");
+                            horoCompatibilityEl.textContent = "Compatible with: " + horoCompatibility;
+                            
+                            
+                            horoDataSection.appendChild(horoCompatibilityEl)                        
+                        }
+                        
+                        
+                        if (userInfo2.lucky_number) {
+                            
+                            var horolucky_number = data.lucky_number
+                            
+                            
+    
+                               var horolucky_numberEl = document.createElement("p");
+                               horolucky_numberEl.textContent = "Lucky Number: " + horolucky_number;
+                               
+                               horoDataSection.appendChild(horolucky_numberEl)
+                        }
+
+                        if (userInfo2.lucky_time) {
+
+                            var horolucky_time = data.lucky_time
+                           
+        
+                            var horolucky_timeEl = document.createElement("p");
+                            horolucky_timeEl.textContent = "Lucky Time: " + horolucky_time;
+                                   
+                            horoDataSection.appendChild(horolucky_timeEl)
+                        }
+
+                        if (userInfo2.mood) {
+
+                            var horomood = data.mood
+                           
+        
+                            var horomoodEl = document.createElement("p");
+                            horomoodEl.textContent = "Today's Mood: " + horomood;
+                                   
+                            horoDataSection.appendChild(horomoodEl)
+                        }
+                        
+                        horoscopeCard.appendChild(horoDataSection)
+                        horoCardContainer.appendChild(horoscopeCard)
+                        widgets.appendChild(horoCardContainer)
+
+            
+        })
+        .catch(err => {
+            console.error(err);
+        });
+    }
+}
+
+// weather card
+var weatherGet = function(userCity) {
+    var weatherUrl = 'https://api.openweathermap.org/data/2.5/weather?q=' + userCity + '&units=imperial&appid=c76096fafe8cde85ece92131d9372eb5';
+    fetch(weatherUrl)
+    .then(function(response) {
+        if (response.ok) {
+            console.log(response);
+            response.json().then(function(data) {
+                console.log(data);
+                var weatherDataObj = {
+                    name: userCity,
+                    temp: data.main.temp,
+                    desc: data.weather[0].description,
+                    humidity: data.main.humidity,
+                    wind: data.wind.speed,
+                };
+                localStorage.setItem("WeatherInfo", JSON.stringify(weatherDataObj));
+                weatherWidget(weatherDataObj);
+            }) 
         }
     })
-    .then(response => {
-        response.json().then(function(data) {
-
-            var color = data.color 
-            
-            var horoscopeCard = document.createElement("div");
-            horoscopeCard.classList = "card"
-            horoscopeCard.setAttribute("style", "width: 300px")
-            
-            var horoscopeColor = document.createElement("span");
-            horoscopeColor.textContent = color;
-            
-            widgets.appendChild(horoscopeCard)
-            horoscopeCard.appendChild(horoscopeColor)
-            
-            console.log(data)
-        })
-    })
-    .catch(err => {
-        console.error(err);
-    });
-	}
-
-    // fetch("https://sameer-kumar-aztro-v1.p.rapidapi.com/?sign=" + userInfo.sign + "&day=today", {
-    //     "method": "POST",
-    //     "headers": {
-    //         "x-rapidapi-host": "sameer-kumar-aztro-v1.p.rapidapi.com",
-    //         "x-rapidapi-key": "5b4f00da92mshdc043b28ff0d6c7p1cab71jsn744cc19d64cb"
-    //     }
-    // })
-    // .then(response => {
-    //     response.json().then(function(data) {
-
-    //         var color = data.color 
-            
-    //         var horoscopeCard = document.createElement("div");
-    //         horoscopeCard.classList = "card"
-    //         horoscopeCard.setAttribute("style", "width: 300px")
-            
-    //         var horoscopeColor = document.createElement("span");
-    //         horoscopeColor.textContent = color;
-            
-            
-            
-    //         widgets.appendChild(horoscopeCard)
-    //         horoscopeCard.appendChild(horoscopeColor)
-            
-    //         console.log(data)
-    //     })
-    // })
-    // .catch(err => {
-    //     console.error(err);
-    // });
-    
-    
-    
 };
 
+var weatherWidget = function(weatherDataObj) {
+
+    var weatherDataObj = JSON.parse(localStorage.getItem('WeatherInfo'));
+
+    var cityTemp = parseInt(weatherDataObj.temp);
+
+    weatherCardContainer = document.createElement('div');
+    weatherCardContainer.classList = "column";
+
+    var weatherCardMain = document.createElement('div');
+    weatherCardMain.classList = "card"
+    weatherCardMain.setAttribute("style", "width: 300px");
+
+    var weatherCardHead = document.createElement('div');
+    weatherCardHead.classList = "card-divider";
+    weatherCardHead.textContent = 'Current Weather';
+
+    var weatherCardSection = document.createElement('div');
+    weatherCardSection.classList = "card-section";
+    
+    var weatherCardContent = document.createElement('ul');
+    weatherCardContent.setAttribute("style", "list-style: none")
+    weatherCardContent.textContent = weatherDataObj.name;
+    
+    var weatherCardTemp = document.createElement('li');
+    weatherCardTemp.textContent = cityTemp + '°F';
+    weatherCardContent.appendChild(weatherCardTemp);
+
+    var weatherCardDesc = document.createElement('li');
+    weatherCardDesc.textContent = weatherDataObj.desc;
+    weatherCardContent.appendChild(weatherCardDesc);
+
+    var weatherCardHumid = document.createElement('li');
+    weatherCardHumid.textContent = 'Humidity: ' + weatherDataObj.humidity + "%";
+    weatherCardContent.appendChild(weatherCardHumid);
+
+    var weatherCardWind = document.createElement('li');
+    weatherCardWind.textContent = 'Wind Speed: ' + weatherDataObj.wind + ' mph';
+    weatherCardContent.appendChild(weatherCardWind);
+
+    weatherCardSection.appendChild(weatherCardContent);
+    weatherCardMain.appendChild(weatherCardHead);
+    weatherCardMain.appendChild(weatherCardSection);
+    weatherCardContainer.appendChild(weatherCardMain);
+    widgets.appendChild(weatherCardContainer);
+
+};
+
+var bannerCreation = function() {
+
+    var name = localStorage.getItem("userName")
+    console.log(name)
+
+    var welcomeBox = document.createElement("div")
+    welcomeBox.classList = "columns small-8 grid-x align-middle"
+
+    var welcomeHeader = document.createElement("h2")
+    
+    welcomeHeader.textContent = "Welcome to Early Bird, " + name + " !"
+
+    welcomeBox.appendChild(welcomeHeader)
+
+    welcomeBanner.appendChild(welcomeBox)
 
 
-
-// if else statement to check for local storage values and either run modals or display cards using previously stored data
-horoscopeWidget();
-jokeWidget();
+}
 
 
-$(document).ready(function() {
-    $('#welcomeModal').foundation('open');
-});
+if (localStorage.userName === undefined) {
+    $(document).ready(function() {
+        $('#welcomeModal').foundation('open');
+    });
+} else {
+    horoscopeWidget();
+    bannerCreation();
+    jokeWidget();
+    weatherWidget();
+}
+
 
 
 nameButton.addEventListener("click", nameHandler)
