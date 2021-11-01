@@ -32,6 +32,8 @@ var nameHandler = function() {
     localStorage.setItem("userCity", userCity)
 
     bannerCreation();
+    weatherGet(userCity);
+
 }
 
 // function to collect horoscope data and set it to local storage
