@@ -15,6 +15,7 @@ var horoMood = document.getElementById("horoMood")
 var dadModal = document.getElementById("dadModal")
 var butttonYes = document.getElementById("buttonyes")
 var welcomeBanner = document.getElementById("welcomeBanner")
+var resetButton = document.getElementById("dropdown")
 
 var HoroscopeStuff = [];
 
@@ -75,57 +76,57 @@ var dadJokeHandler = function(event) {
 
 
 
-// function to attach dad joke card
+// // function to attach dad joke card
 
-var jokeWidget = function() {
+// var jokeWidget = function() {
     
-    fetch("https://dad-jokes.p.rapidapi.com/random/joke", {
-        "method": "GET",
-        "headers": {
-            "x-rapidapi-host": "dad-jokes.p.rapidapi.com",
-            "x-rapidapi-key": "5b4f00da92mshdc043b28ff0d6c7p1cab71jsn744cc19d64cb"
-        }
-    })
-    .then(response => {
-        response.json().then(function(data) {
+//     fetch("https://dad-jokes.p.rapidapi.com/random/joke", {
+//         "method": "GET",
+//         "headers": {
+//             "x-rapidapi-host": "dad-jokes.p.rapidapi.com",
+//             "x-rapidapi-key": "5b4f00da92mshdc043b28ff0d6c7p1cab71jsn744cc19d64cb"
+//         }
+//     })
+//     .then(response => {
+//         response.json().then(function(data) {
             
-            var joke = data.body[0].setup;
-            var punchLine = data.body[0].punchline
+//             var joke = data.body[0].setup;
+//             var punchLine = data.body[0].punchline
 
-            var jokeCardContainer = document.createElement("div")
-            jokeCardContainer.classList = "column"
+//             var jokeCardContainer = document.createElement("div")
+//             jokeCardContainer.classList = "column"
             
-            var jokeCard = document.createElement("div");
-            jokeCard.classList = "card";
-            jokeCard.setAttribute("style", "width: 300px")
+//             var jokeCard = document.createElement("div");
+//             jokeCard.classList = "card";
+//             jokeCard.setAttribute("style", "width: 300px")
 
-            var jokeImg = document.createElement("img")
-            jokeImg.setAttribute("src", "assets/images/Dad-jokes.jpg")
+//             var jokeImg = document.createElement("img")
+//             jokeImg.setAttribute("src", "assets/images/Dad-jokes.jpg")
             
-            var jokeSetup = document.createElement("h5");
-            jokeSetup.classList = "card-divider"
-            jokeSetup.textContent = joke;
+//             var jokeSetup = document.createElement("h5");
+//             jokeSetup.classList = "card-divider"
+//             jokeSetup.textContent = joke;
             
-            var jokeLine = document.createElement("p");
-            jokeLine.classList = "card-section"
-            jokeLine.textContent = punchLine
+//             var jokeLine = document.createElement("p");
+//             jokeLine.classList = "card-section"
+//             jokeLine.textContent = punchLine
             
-            // var newJokeButton = document.createElement("button")
-            // newJokeButton.textContent = "Get a New Joke";
+//             // var newJokeButton = document.createElement("button")
+//             // newJokeButton.textContent = "Get a New Joke";
             
             
-            jokeCard.appendChild(jokeImg)
-            jokeCard.appendChild(jokeSetup);
-            jokeCard.appendChild(jokeLine)
-            jokeCardContainer.appendChild(jokeCard)
-            widgets.appendChild(jokeCardContainer);
-            // jokeCard.appendChild(newJokeButton)
-        })
-    })
-    .catch(err => {
-        console.error(err);
-    });
-}
+//             jokeCard.appendChild(jokeImg)
+//             jokeCard.appendChild(jokeSetup);
+//             jokeCard.appendChild(jokeLine)
+//             jokeCardContainer.appendChild(jokeCard)
+//             widgets.appendChild(jokeCardContainer);
+//             // jokeCard.appendChild(newJokeButton)
+//         })
+//     })
+//     .catch(err => {
+//         console.error(err);
+//     });
+// }
 
 
 
@@ -136,7 +137,7 @@ var horoscopeWidget = function(horoDataObj) {
 
     var userInfo = localStorage.getItem("HoroscopeStuff")
 
-    console.log(userInfo)
+    
     var userInfo2 = JSON.parse(userInfo)
    
     var userSign = userInfo2.Sign
@@ -192,7 +193,7 @@ console.log(userSign)
                 if (userInfo2.color) {
                     
                     var horoColor = data.color
-                    
+
                     var horoColorEl = document.createElement("p");
                     horoColorEl.textContent = "Lucky Color: " + horoColor;
                     horoColorEl.setAttribute("style", "background-color: " + horoColor )
@@ -352,6 +353,7 @@ var bannerCreation = function() {
 
 }
 
+var firstLoad = function(){
 
 if (localStorage.userName === undefined) {
     $(document).ready(function() {
@@ -363,9 +365,28 @@ if (localStorage.userName === undefined) {
     jokeWidget();
     weatherWidget();
 }
+};
 
+var resetSettings = function () {
+
+    welcomeBanner = ""
+    widgets = ""
+    
+    console.log("hello")
+    
+    localStorage.clear();
+
+    firstLoad();
+
+    location.reload();
+
+    
+}
+resetButton.addEventListener("click", resetSettings)
 
 
 nameButton.addEventListener("click", nameHandler)
 horoscopeButton.addEventListener("click", horoscopeHandler)
 dadModal.addEventListener("click", dadJokeHandler)
+
+firstLoad();
