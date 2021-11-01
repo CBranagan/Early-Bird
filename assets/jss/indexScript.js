@@ -15,6 +15,7 @@ var horoMood = document.getElementById("horoMood")
 var dadModal = document.getElementById("dadModal")
 var butttonYes = document.getElementById("buttonyes")
 var welcomeBanner = document.getElementById("welcomeBanner")
+var resetButton = document.getElementById("dropdown")
 
 var HoroscopeStuff = [];
 
@@ -136,7 +137,7 @@ var horoscopeWidget = function(horoDataObj) {
 
     var userInfo = localStorage.getItem("HoroscopeStuff")
 
-    console.log(userInfo)
+    
     var userInfo2 = JSON.parse(userInfo)
    
     var userSign = userInfo2.Sign
@@ -192,7 +193,7 @@ console.log(userSign)
                 if (userInfo2.color) {
                     
                     var horoColor = data.color
-                    
+
                     var horoColorEl = document.createElement("p");
                     horoColorEl.textContent = "Lucky Color: " + horoColor;
                     horoColorEl.setAttribute("style", "background-color: " + horoColor )
@@ -352,6 +353,7 @@ var bannerCreation = function() {
 
 }
 
+var firstLoad = function(){
 
 if (localStorage.userName === undefined) {
     $(document).ready(function() {
@@ -363,9 +365,28 @@ if (localStorage.userName === undefined) {
     jokeWidget();
     weatherWidget();
 }
+};
 
+var resetSettings = function () {
+
+    welcomeBanner = ""
+    widgets = ""
+    
+    console.log("hello")
+    
+    localStorage.clear();
+
+    firstLoad();
+
+    location.reload();
+
+    
+}
+resetButton.addEventListener("click", resetSettings)
 
 
 nameButton.addEventListener("click", nameHandler)
 horoscopeButton.addEventListener("click", horoscopeHandler)
 dadModal.addEventListener("click", dadJokeHandler)
+
+firstLoad();
