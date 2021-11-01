@@ -289,6 +289,9 @@ var weatherWidget = function(weatherDataObj) {
 
     var cityTemp = parseInt(weatherDataObj.temp);
 
+    weatherCardContainer = document.createElement('div');
+    weatherCardContainer.classList = "column";
+
     var weatherCardMain = document.createElement('div');
     weatherCardMain.classList = "card"
     weatherCardMain.setAttribute("style", "width: 300px");
@@ -311,6 +314,23 @@ var weatherWidget = function(weatherDataObj) {
     var weatherCardDesc = document.createElement('li');
     weatherCardDesc.textContent = weatherDataObj.desc;
     weatherCardContent.appendChild(weatherCardDesc);
+
+    var weatherCardHumid = document.createElement('li');
+    weatherCardHumid.textContent = 'Humidity: ' + weatherDataObj.humidity + "%";
+    weatherCardContent.appendChild(weatherCardHumid);
+
+    var weatherCardWind = document.createElement('li');
+    weatherCardWind.textContent = 'Wind Speed: ' + weatherDataObj.wind + ' mph';
+    weatherCardContent.appendChild(weatherCardWind);
+
+    weatherCardSection.appendChild(weatherCardContent);
+    weatherCardMain.appendChild(weatherCardHead);
+    weatherCardMain.appendChild(weatherCardSection);
+    weatherCardContainer.appendChild(weatherCardMain);
+    widgets.appendChild(weatherCardContainer);
+
+};
+
 var bannerCreation = function() {
 
     var name = localStorage.getItem("userName")
@@ -329,22 +349,6 @@ var bannerCreation = function() {
 
 
 }
-
-
-    var weatherCardHumid = document.createElement('li');
-    weatherCardHumid.textContent = 'Humidity: ' + weatherDataObj.humidity + "%";
-    weatherCardContent.appendChild(weatherCardHumid);
-
-    var weatherCardWind = document.createElement('li');
-    weatherCardWind.textContent = 'Wind Speed: ' + weatherDataObj.wind + ' mph';
-    weatherCardContent.appendChild(weatherCardWind);
-
-    weatherCardSection.appendChild(weatherCardContent);
-    weatherCardMain.appendChild(weatherCardHead);
-    weatherCardMain.appendChild(weatherCardSection);
-    columnMainEl.appendChild(weatherCardMain);
-
-};
 
 
 if (localStorage.userName === undefined) {
