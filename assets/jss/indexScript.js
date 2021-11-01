@@ -32,7 +32,8 @@ var nameHandler = function() {
     localStorage.setItem("userCity", userCity)
 
     bannerCreation();
-    weatherWidget();
+    weatherGet(userCity);
+
 }
 
 // function to collect horoscope data and set it to local storage
@@ -290,6 +291,9 @@ var weatherWidget = function(weatherDataObj) {
 
     var cityTemp = parseInt(weatherDataObj.temp);
 
+    weatherCardContainer = document.createElement('div');
+    weatherCardContainer.classList = "column";
+
     var weatherCardMain = document.createElement('div');
     weatherCardMain.classList = "card"
     weatherCardMain.setAttribute("style", "width: 300px");
@@ -312,21 +316,21 @@ var weatherWidget = function(weatherDataObj) {
     var weatherCardDesc = document.createElement('li');
     weatherCardDesc.textContent = weatherDataObj.desc;
     weatherCardContent.appendChild(weatherCardDesc);
-    
-    
+
     var weatherCardHumid = document.createElement('li');
     weatherCardHumid.textContent = 'Humidity: ' + weatherDataObj.humidity + "%";
     weatherCardContent.appendChild(weatherCardHumid);
-    
+
     var weatherCardWind = document.createElement('li');
     weatherCardWind.textContent = 'Wind Speed: ' + weatherDataObj.wind + ' mph';
     weatherCardContent.appendChild(weatherCardWind);
-    
+
     weatherCardSection.appendChild(weatherCardContent);
     weatherCardMain.appendChild(weatherCardHead);
     weatherCardMain.appendChild(weatherCardSection);
-    widgets.appendChild(weatherCardMain);
-    
+    weatherCardContainer.appendChild(weatherCardMain);
+    widgets.appendChild(weatherCardContainer);
+
 };
 
 var bannerCreation = function() {
