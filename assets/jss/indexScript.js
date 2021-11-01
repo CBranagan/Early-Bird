@@ -32,6 +32,7 @@ var nameHandler = function() {
     localStorage.setItem("userCity", userCity)
 
     bannerCreation();
+    weatherWidget();
 }
 
 // function to collect horoscope data and set it to local storage
@@ -311,6 +312,23 @@ var weatherWidget = function(weatherDataObj) {
     var weatherCardDesc = document.createElement('li');
     weatherCardDesc.textContent = weatherDataObj.desc;
     weatherCardContent.appendChild(weatherCardDesc);
+    
+    
+    var weatherCardHumid = document.createElement('li');
+    weatherCardHumid.textContent = 'Humidity: ' + weatherDataObj.humidity + "%";
+    weatherCardContent.appendChild(weatherCardHumid);
+    
+    var weatherCardWind = document.createElement('li');
+    weatherCardWind.textContent = 'Wind Speed: ' + weatherDataObj.wind + ' mph';
+    weatherCardContent.appendChild(weatherCardWind);
+    
+    weatherCardSection.appendChild(weatherCardContent);
+    weatherCardMain.appendChild(weatherCardHead);
+    weatherCardMain.appendChild(weatherCardSection);
+    widgets.appendChild(weatherCardMain);
+    
+};
+
 var bannerCreation = function() {
 
     var name = localStorage.getItem("userName")
@@ -329,22 +347,6 @@ var bannerCreation = function() {
 
 
 }
-
-
-    var weatherCardHumid = document.createElement('li');
-    weatherCardHumid.textContent = 'Humidity: ' + weatherDataObj.humidity + "%";
-    weatherCardContent.appendChild(weatherCardHumid);
-
-    var weatherCardWind = document.createElement('li');
-    weatherCardWind.textContent = 'Wind Speed: ' + weatherDataObj.wind + ' mph';
-    weatherCardContent.appendChild(weatherCardWind);
-
-    weatherCardSection.appendChild(weatherCardContent);
-    weatherCardMain.appendChild(weatherCardHead);
-    weatherCardMain.appendChild(weatherCardSection);
-    columnMainEl.appendChild(weatherCardMain);
-
-};
 
 
 if (localStorage.userName === undefined) {
