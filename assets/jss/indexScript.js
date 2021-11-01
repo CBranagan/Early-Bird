@@ -192,7 +192,7 @@ console.log(userSign)
                 if (userInfo2.color) {
                     
                     var horoColor = data.color
-                    
+
                     var horoColorEl = document.createElement("p");
                     horoColorEl.textContent = "Lucky Color: " + horoColor;
                     horoColorEl.setAttribute("style", "background-color: " + horoColor )
