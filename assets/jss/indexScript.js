@@ -20,7 +20,6 @@ var HoroscopeStuff = [];
 
 
 
-
 // function to collect username and city and set it to local storage
 
 var nameHandler = function() {
@@ -28,7 +27,6 @@ var nameHandler = function() {
     var userCity = cityInput.value.trim()
 
     var userName = nameInput.value.trim()
-
 
     localStorage.setItem("userName", userName)
     localStorage.setItem("userCity", userCity)
@@ -262,6 +260,57 @@ console.log(userSign)
     }
 }
 
+// weather card
+var weatherGet = function(userCity) {
+    var weatherUrl = 'https://api.openweathermap.org/data/2.5/weather?q=' + userCity + '&units=imperial&appid=c76096fafe8cde85ece92131d9372eb5';
+    fetch(weatherUrl)
+    .then(function(response) {
+        if (response.ok) {
+            console.log(response);
+            response.json().then(function(data) {
+                console.log(data);
+                var weatherDataObj = {
+                    name: userCity,
+                    temp: data.main.temp,
+                    desc: data.weather[0].description,
+                    humidity: data.main.humidity,
+                    wind: data.wind.speed,
+                };
+                localStorage.setItem("WeatherInfo", JSON.stringify(weatherDataObj));
+                weatherWidget(weatherDataObj);
+            }) 
+        }
+    })
+};
+
+var weatherWidget = function(weatherDataObj) {
+
+    var weatherDataObj = JSON.parse(localStorage.getItem('WeatherInfo'));
+
+    var cityTemp = parseInt(weatherDataObj.temp);
+
+    var weatherCardMain = document.createElement('div');
+    weatherCardMain.classList = "card"
+    weatherCardMain.setAttribute("style", "width: 300px");
+
+    var weatherCardHead = document.createElement('div');
+    weatherCardHead.classList = "card-divider";
+    weatherCardHead.textContent = 'Current Weather';
+
+    var weatherCardSection = document.createElement('div');
+    weatherCardSection.classList = "card-section";
+    
+    var weatherCardContent = document.createElement('ul');
+    weatherCardContent.setAttribute("style", "list-style: none")
+    weatherCardContent.textContent = weatherDataObj.name;
+    
+    var weatherCardTemp = document.createElement('li');
+    weatherCardTemp.textContent = cityTemp + '°F';
+    weatherCardContent.appendChild(weatherCardTemp);
+
+    var weatherCardDesc = document.createElement('li');
+    weatherCardDesc.textContent = weatherDataObj.desc;
+    weatherCardContent.appendChild(weatherCardDesc);
 var bannerCreation = function() {
 
     var name = localStorage.getItem("userName")
@@ -282,9 +331,20 @@ var bannerCreation = function() {
 }
 
 
+    var weatherCardHumid = document.createElement('li');
+    weatherCardHumid.textContent = 'Humidity: ' + weatherDataObj.humidity + "%";
+    weatherCardContent.appendChild(weatherCardHumid);
 
+    var weatherCardWind = document.createElement('li');
+    weatherCardWind.textContent = 'Wind Speed: ' + weatherDataObj.wind + ' mph';
+    weatherCardContent.appendChild(weatherCardWind);
 
+    weatherCardSection.appendChild(weatherCardContent);
+    weatherCardMain.appendChild(weatherCardHead);
+    weatherCardMain.appendChild(weatherCardSection);
+    columnMainEl.appendChild(weatherCardMain);
 
+};
 
 
 if (localStorage.userName === undefined) {
@@ -295,7 +355,7 @@ if (localStorage.userName === undefined) {
     horoscopeWidget();
     bannerCreation();
     jokeWidget();
-    console.log('You have info. Enjoy.')
+    weatherWidget();
 }
 
 
