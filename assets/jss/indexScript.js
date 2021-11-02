@@ -126,7 +126,7 @@ var dadToggler = function() {
     }
 }
 
-// // function to attach dad joke card
+// function to attach dad joke card
 
 var jokeWidget = function() {
     
