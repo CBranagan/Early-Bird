@@ -15,9 +15,16 @@ var horoMood = document.getElementById("horoMood")
 var dadModal = document.getElementById("dadModal")
 var butttonYes = document.getElementById("buttonyes")
 var welcomeBanner = document.getElementById("welcomeBanner")
+var resetButton = document.getElementById("reset")
+var cryptoTog = document.getElementById("toggler1")
+var weatherTog = document.getElementById("toggler3")
+var dadTog = document.getElementById("toggler4")
+var horoTog = document.getElementById("toggler2")
+var cryptoSection = document.getElementById("column-main")
+
+
 
 var HoroscopeStuff = [];
-
 
 
 
@@ -29,11 +36,12 @@ var nameHandler = function() {
 
     var userName = nameInput.value.trim()
 
-
     localStorage.setItem("userName", userName)
     localStorage.setItem("userCity", userCity)
 
     bannerCreation();
+    weatherGet(userCity);
+
 }
 
 // function to collect horoscope data and set it to local storage
@@ -73,9 +81,52 @@ var dadJokeHandler = function(event) {
 
 }
 
+//functions to toggle applications
 
 
-// function to attach dad joke card
+
+
+// cryptoTog.addEventListener("click", cryptoToggler)
+// weatherTog.addEventListener("click", weatherToggler)
+// dadTog.addEventListener("click", dadToggler)
+
+var horoToggler = function() {
+    if (horoSection.className === "column") {
+        horoSection.className = "column hide"
+    }
+    else {
+        horoSection.className = "column"
+    }
+}
+
+var cryptoToggler = function() {
+    if (cryptoSection.className === "column") {
+        cryptoSection.className = "column hide"
+    }
+    else {
+        cryptoSection.className = "column"
+    }
+}
+
+var weatherToggler = function() {
+    if (weatherSection.className === "column") {
+        weatherSection.className = "column hide"
+    }
+    else {
+        weatherSection.className = "column"
+    }
+}
+
+var dadToggler = function() {
+    if (jokeCardSection.className === "column") {
+        jokeCardSection.className = "column hide"
+    }
+    else {
+        jokeCardSection.className = "column"
+    }
+}
+
+// // function to attach dad joke card
 
 var jokeWidget = function() {
     
@@ -94,6 +145,7 @@ var jokeWidget = function() {
 
             var jokeCardContainer = document.createElement("div")
             jokeCardContainer.classList = "column"
+            jokeCardContainer.id = "jokeCardSection" 
             
             var jokeCard = document.createElement("div");
             jokeCard.classList = "card";
@@ -136,7 +188,7 @@ var horoscopeWidget = function(horoDataObj) {
 
     var userInfo = localStorage.getItem("HoroscopeStuff")
 
-    console.log(userInfo)
+    
     var userInfo2 = JSON.parse(userInfo)
    
     var userSign = userInfo2.Sign
@@ -160,6 +212,7 @@ console.log(userSign)
                 
                 var horoCardContainer = document.createElement("div")
                 horoCardContainer.classList = "column"
+                horoCardContainer.id = "horoSection"
 
                 var horoscopeCard = document.createElement("div");
                 
@@ -192,7 +245,7 @@ console.log(userSign)
                 if (userInfo2.color) {
                     
                     var horoColor = data.color
-                    
+
                     var horoColorEl = document.createElement("p");
                     horoColorEl.textContent = "Lucky Color: " + horoColor;
                     horoColorEl.setAttribute("style", "background-color: " + horoColor )
@@ -262,6 +315,78 @@ console.log(userSign)
     }
 }
 
+// weather card
+var weatherGet = function(userCity) {
+    var weatherUrl = 'https://api.openweathermap.org/data/2.5/weather?q=' + userCity + '&units=imperial&appid=c76096fafe8cde85ece92131d9372eb5';
+    fetch(weatherUrl)
+    .then(function(response) {
+        if (response.ok) {
+            console.log(response);
+            response.json().then(function(data) {
+                console.log(data);
+                var weatherDataObj = {
+                    name: userCity,
+                    temp: data.main.temp,
+                    desc: data.weather[0].description,
+                    humidity: data.main.humidity,
+                    wind: data.wind.speed,
+                };
+                localStorage.setItem("WeatherInfo", JSON.stringify(weatherDataObj));
+                weatherWidget(weatherDataObj);
+            }) 
+        }
+    })
+};
+
+var weatherWidget = function(weatherDataObj) {
+
+    var weatherDataObj = JSON.parse(localStorage.getItem('WeatherInfo'));
+
+    var cityTemp = parseInt(weatherDataObj.temp);
+
+    weatherCardContainer = document.createElement('div');
+    weatherCardContainer.classList = "column";
+    weatherCardContainer.id = "weatherSection";
+
+    var weatherCardMain = document.createElement('div');
+    weatherCardMain.classList = "card"
+    weatherCardMain.setAttribute("style", "width: 300px");
+
+    var weatherCardHead = document.createElement('div');
+    weatherCardHead.classList = "card-divider";
+    weatherCardHead.textContent = 'Current Weather';
+
+    var weatherCardSection = document.createElement('div');
+    weatherCardSection.classList = "card-section";
+    
+    var weatherCardContent = document.createElement('ul');
+    weatherCardContent.setAttribute("style", "list-style: none")
+    weatherCardContent.textContent = weatherDataObj.name;
+    
+    var weatherCardTemp = document.createElement('li');
+    weatherCardTemp.textContent = cityTemp + '°F';
+    weatherCardContent.appendChild(weatherCardTemp);
+
+    var weatherCardDesc = document.createElement('li');
+    weatherCardDesc.textContent = weatherDataObj.desc;
+    weatherCardContent.appendChild(weatherCardDesc);
+
+    var weatherCardHumid = document.createElement('li');
+    weatherCardHumid.textContent = 'Humidity: ' + weatherDataObj.humidity + "%";
+    weatherCardContent.appendChild(weatherCardHumid);
+
+    var weatherCardWind = document.createElement('li');
+    weatherCardWind.textContent = 'Wind Speed: ' + weatherDataObj.wind + ' mph';
+    weatherCardContent.appendChild(weatherCardWind);
+
+    weatherCardSection.appendChild(weatherCardContent);
+    weatherCardMain.appendChild(weatherCardHead);
+    weatherCardMain.appendChild(weatherCardSection);
+    weatherCardContainer.appendChild(weatherCardMain);
+    widgets.appendChild(weatherCardContainer);
+
+};
+
 var bannerCreation = function() {
 
     var name = localStorage.getItem("userName")
@@ -272,7 +397,7 @@ var bannerCreation = function() {
 
     var welcomeHeader = document.createElement("h2")
     
-    welcomeHeader.textContent = "Welcome to Early Bird, " + name + " !"
+    welcomeHeader.textContent = "Welcome to EarlyBird, " + name + "!"
 
     welcomeBox.appendChild(welcomeHeader)
 
@@ -281,11 +406,7 @@ var bannerCreation = function() {
 
 }
 
-
-
-
-
-
+var firstLoad = function(){
 
 if (localStorage.userName === undefined) {
     $(document).ready(function() {
@@ -295,11 +416,33 @@ if (localStorage.userName === undefined) {
     horoscopeWidget();
     bannerCreation();
     jokeWidget();
-    console.log('You have info. Enjoy.')
+    weatherWidget();
 }
+};
 
+var resetSettings = function () {
 
+    welcomeBanner = ""
+    widgets = ""
+    
+    console.log("hello")
+    
+    localStorage.clear();
+
+    firstLoad();
+
+    location.reload();
+
+    
+}
+resetButton.addEventListener("click", resetSettings)
+horoTog.addEventListener("click", horoToggler)
+dadTog.addEventListener("click", dadToggler)
+weatherTog.addEventListener("click", weatherToggler)
+cryptoTog.addEventListener("click", cryptoToggler)
 
 nameButton.addEventListener("click", nameHandler)
 horoscopeButton.addEventListener("click", horoscopeHandler)
 dadModal.addEventListener("click", dadJokeHandler)
+
+firstLoad();

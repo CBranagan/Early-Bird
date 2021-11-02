@@ -14,33 +14,50 @@
         <div class="title-bar">
             <h4 style="font-family: Verdana, Geneva, Tahoma, sans-serif;" class="title-bar-left">EarlyBird</h4>
             <div class="title-bar-right">
-              <button class="menu-icon title-bar-title" type="button" data-toggle="example-dropdown-bottom-right"></button>
-              <div class="dropdown-pane" data-position="bottom" data-alignment="right" id="example-dropdown-bottom-right" data-dropdown data-auto-focus="true" style="width: 150px;">
-                <li>
-                  <div class="switch">
-                    <input class="switch-input" id="exampleSwitch1" type="checkbox" name="exampleSwitch">
-                    <label class="switch-paddle" for="exampleSwitch1">
-                      <span class="show-for-sr">Toggle for: </span>
-                    </label>
-                  </div>
-                </li>
-                <li>
-                  <div class="switch">
-                    <input class="switch-input" id="exampleSwitch2" type="checkbox" name="exampleSwitch">
-                    <label class="switch-paddle" for="exampleSwitch2">
-                      <span class="show-for-sr">Toggle for: </span>
-                    </label>
-                  </div>
-                </li>
-                <li>
-                  <div class="switch">
-                    <input class="switch-input" id="exampleSwitch3" type="checkbox" name="exampleSwitch">
-                    <label class="switch-paddle" for="exampleSwitch3">
-                      <span class="show-for-sr">Toggle for: </span>
-                    </label>
-                  </div>
-                </li>
+              <div class="dropdown-pane" data-position="bottom" data-alignment="right" id="example-dropdown-bottom-right" data-dropdown data-auto-focus="true" style="width: 200px;">
               </div>
+                <button class="menu-icon title-bar-title" type="button" data-toggle="dropdown"></button>
+                <ul class="dropdown-pane" data-position="bottom" data-alignment="center" id="dropdown" data-dropdown data-auto-focus="true" style="width: 225px;">
+                  <li>
+                    <span style="color: grey;">Toggle Crypto Prices App</span>
+                    <div class="switch">
+                      <input class="switch-input" id="toggler1" type="checkbox" name="toggler1" checked>
+                      <label class="switch-paddle" for="toggler1">
+                        <span class="show-for-sr">Toggle for: </span>
+                      </label>
+                    </div>
+                  </li>
+                  <li>
+                    <span style="color: grey;">Toggle Horoscope App</span>
+                    <div class="switch">
+                      <input class="switch-input" id="toggler2" type="checkbox" name="toggler2" checked>
+                      <label class="switch-paddle" for="toggler2">
+                        <span class="show-for-sr">Toggle for: </span>
+                      </label>
+                    </div>
+                  </li>
+                  <li>
+                    <span style="color: grey;">Toggle Weather App</span>
+                    <div class="switch">
+                      <input class="switch-input" id="toggler3" type="checkbox" name="toggler3" checked>
+                      <label class="switch-paddle" for="toggler3">
+                        <span class="show-for-sr">Toggle for: </span>
+                      </label>
+                    </div>
+                  </li>
+                  <li>
+                    <span style="color: grey;">Toggle Dad Jokes App</span>
+                    <div class="switch">
+                      <input class="switch-input" id="toggler4" type="checkbox" name="toggler4" checked>
+                      <label class="switch-paddle" for="toggler4">
+                        <span class="show-for-sr">Toggle for: </span>
+                      </label>
+                    </div>
+                  </li>  
+                  <li>
+                    <a href="#" class="button" id="reset">Reset Application</a>
+                  </li>
+                </ul>
             </div>
           </div>
     </nav>
@@ -54,7 +71,7 @@
           </div>
     </section>
     <section id="widgets" class="small-up-1 medium-up-2 large-up-3">
-          <div class="column">
+          <div id="column-main" class="column">
             <div class="card" style="width: 300px;">
               <div class="card-divider">
                 Coming soon from EarlyBird!
@@ -68,13 +85,12 @@
             </div>
           
           </div>
-         
-
-          
     </section>
     <section id="landing">
         <div></div>
     </section>
+
+    <div class="gird-x">Icons made by <a href="https://www.flaticon.com/authors/smashicons" title="Smashicons">Smashicons</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
 
     <!-- Welcome Modal start -->
 
@@ -84,10 +100,10 @@
         <p class="lead">To find out how to make your day perfect, allow us to ask a couple of questions.</p>
         <div>
             <form action="">
-                <h4>What is your Name?</h4>
-                <input id="name" type="text" placeholder="ex. Alex Recipe">
-                <h4>What city do you live in?</h4>
-                <input id="city" type="text" placeholder="ex. Recipeland">
+                <h4>Please enter your <span style="font-weight: bold;">First Name </span>below</h4>
+                <input id="name" type="text" placeholder="First Name">
+                <h4>What <span style="font-weight: bold;">city</span> do you live in?</h4>
+                <input id="city" type="text" placeholder="City">
             </form>
             <div><button id="namebutton" class="button" data-open="horoscopeModal">Lets get started!</button></div>
         </div>
@@ -114,10 +130,11 @@
                 <option value="capricornus">Capricornus</option>
                 <option value="aquarius">Aquarius</option>
                 <option value="pisces">Pisces</option>
+                <br>
             </select>
             <p>What type of horoscope content would you like to see?</p>
             <input type="checkbox" id="horoColor" name="horoColor" value="Color">
-            <label for="horoColo">Color</label>
+            <label for="horoColor">Color</label>
             <br>
             <input type="checkbox" id="horoComp" name="horoComp" value="Compatability">
             <label for="horoComp">Compatability</label>
@@ -137,14 +154,17 @@
             <input type="checkbox" id="horoMood" name="horoMood" value="Mood">
             <label for="horoMood">Mood</label>
             <br>
+            <br>
+            <br>
             <div class="text-center">
                 <button id="horoscopebutton" class="button" data-open="dadModal">Next</button>
             </div>
         </form>
         <!-- Skip/Back Button -->
-        
-        <button class="button secondary" data-open="dadModal" style="right: 1rem; bottom: 1rem; line-height: 1; position: absolute; z-index: 10;">Skip</button>
-        <button class="button secondary" data-open='welcomeModal' style="left: 1rem; bottom: 1rem; line-height: 1; position: absolute; z-index: 10;">Back</button>
+        <div>
+            <button class="button secondary" data-open="dadModal" style="right: 1rem; bottom: 1rem; line-height: 1; position: absolute; z-index: 10;">Skip</button>
+            <button class="button secondary" data-open='welcomeModal' style="left: 1rem; bottom: 1rem; line-height: 1; position: absolute; z-index: 10; margin-bottom: 1;">Back</button>
+        </div>
     </div>
 
     <!-- Dad-Joke Modal -->
@@ -156,9 +176,10 @@
             <div class="cell small-4 text-center" data-close><button data-value="true" id= "buttonyes" class="button">Yes</button></div>
             <div class="cell small-4 text-center" data-close><button data-value="false" class="button">No</button></div>
         </div>
-        <button class="close-button" data-close aria-label="Close modal" type="button">
-            <span aria-hidden="true">&times;</span>
-        </button>
+        <div>
+            <button class="button secondary" data-close style="right: 1rem; bottom: 1rem; line-height: 1; position: absolute; z-index: 10;">Skip</button>
+            <button class="button secondary" data-open='horoscopeModal' style="left: 1rem; bottom: 1rem; line-height: 1; position: absolute; z-index: 10; margin-bottom: 1;">Back</button>
+        </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
