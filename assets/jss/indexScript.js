@@ -15,7 +15,14 @@ var horoMood = document.getElementById("horoMood")
 var dadModal = document.getElementById("dadModal")
 var butttonYes = document.getElementById("buttonyes")
 var welcomeBanner = document.getElementById("welcomeBanner")
-var resetButton = document.getElementById("dropdown")
+var resetButton = document.getElementById("reset")
+var cryptoTog = document.getElementById("toggler1")
+var weatherTog = document.getElementById("toggler3")
+var dadTog = document.getElementById("toggler4")
+var horoTog = document.getElementById("toggler2")
+var cryptoSection = document.getElementById("column-main")
+
+
 
 var HoroscopeStuff = [];
 
@@ -76,7 +83,50 @@ var dadJokeHandler = function(event) {
 
 }
 
+//functions to toggle applications
 
+
+
+
+// cryptoTog.addEventListener("click", cryptoToggler)
+// weatherTog.addEventListener("click", weatherToggler)
+// dadTog.addEventListener("click", dadToggler)
+
+var horoToggler = function() {
+    if (horoSection.className === "column") {
+        horoSection.className = "column hide"
+    }
+    else {
+        horoSection.className = "column"
+    }
+}
+
+var cryptoToggler = function() {
+    if (cryptoSection.className === "column") {
+        cryptoSection.className = "column hide"
+    }
+    else {
+        cryptoSection.className = "column"
+    }
+}
+
+var weatherToggler = function() {
+    if (weatherSection.className === "column") {
+        weatherSection.className = "column hide"
+    }
+    else {
+        weatherSection.className = "column"
+    }
+}
+
+var dadToggler = function() {
+    if (jokeCardSection.className === "column") {
+        jokeCardSection.className = "column hide"
+    }
+    else {
+        jokeCardSection.className = "column"
+    }
+}
 
 // function to attach dad joke card
 
@@ -104,6 +154,7 @@ var jokeWidget = function() {
 
             var jokeCardContainer = document.createElement("div")
             jokeCardContainer.classList = "column"
+            jokeCardContainer.id = "jokeCardSection" 
             
             var jokeCard = document.createElement("div");
             jokeCard.classList = "card";
@@ -172,6 +223,7 @@ console.log(userSign)
                 
                 var horoCardContainer = document.createElement("div")
                 horoCardContainer.classList = "column"
+                horoCardContainer.id = "horoSection"
 
                 var horoscopeCard = document.createElement("div");
                 
@@ -305,6 +357,7 @@ var weatherWidget = function(weatherDataObj) {
 
     weatherCardContainer = document.createElement('div');
     weatherCardContainer.classList = "column";
+    weatherCardContainer.id = "weatherSection";
 
     var weatherCardMain = document.createElement('div');
     weatherCardMain.classList = "card"
@@ -355,7 +408,7 @@ var bannerCreation = function() {
 
     var welcomeHeader = document.createElement("h2")
     
-    welcomeHeader.textContent = "Welcome to Early Bird, " + name + " !"
+    welcomeHeader.textContent = "Welcome to EarlyBird, " + name + "!"
 
     welcomeBox.appendChild(welcomeHeader)
 
@@ -394,7 +447,10 @@ var resetSettings = function () {
     
 }
 resetButton.addEventListener("click", resetSettings)
-
+horoTog.addEventListener("click", horoToggler)
+dadTog.addEventListener("click", dadToggler)
+weatherTog.addEventListener("click", weatherToggler)
+cryptoTog.addEventListener("click", cryptoToggler)
 
 nameButton.addEventListener("click", nameHandler)
 horoscopeButton.addEventListener("click", horoscopeHandler)
