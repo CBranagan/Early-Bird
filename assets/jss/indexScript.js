@@ -68,6 +68,8 @@ var dadJokeHandler = function(event) {
     
     var dadJokeOption = event.target.dataset.value
 
+    
+
     localStorage.setItem("dadJoke", dadJokeOption)
 
     jokeWidget();
@@ -80,6 +82,7 @@ var dadJokeHandler = function(event) {
 
 var jokeWidget = function() {
     
+    
     fetch("https://dad-jokes.p.rapidapi.com/random/joke", {
         "method": "GET",
         "headers": {
@@ -90,8 +93,14 @@ var jokeWidget = function() {
     .then(response => {
         response.json().then(function(data) {
             
+            
             var joke = data.body[0].setup;
             var punchLine = data.body[0].punchline
+            var jokeChoice = localStorage.getItem("dadJoke")
+        
+            console.log(jokeChoice)
+        
+            if (jokeChoice === "true") {
 
             var jokeCardContainer = document.createElement("div")
             jokeCardContainer.classList = "column"
@@ -121,8 +130,10 @@ var jokeWidget = function() {
             jokeCardContainer.appendChild(jokeCard)
             widgets.appendChild(jokeCardContainer);
             // jokeCard.appendChild(newJokeButton)
+            }
         })
     })
+
     .catch(err => {
         console.error(err);
     });
