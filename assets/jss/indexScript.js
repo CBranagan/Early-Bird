@@ -446,11 +446,11 @@ var resetSettings = function () {
 
     
 }
-resetButton.addEventListener("click", resetSettings)
 horoTog.addEventListener("click", horoToggler)
 dadTog.addEventListener("click", dadToggler)
 weatherTog.addEventListener("click", weatherToggler)
 cryptoTog.addEventListener("click", cryptoToggler)
+resetButton.addEventListener("click", resetSettings)
 
 nameButton.addEventListener("click", nameHandler)
 horoscopeButton.addEventListener("click", horoscopeHandler)
